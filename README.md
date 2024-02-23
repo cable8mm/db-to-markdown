@@ -1,6 +1,6 @@
 # About
 
-This library is for importing from db to document for Jekyll reporitory.
+This library is for importing from db to document for Jekyll repository.
 
 ## License
 
