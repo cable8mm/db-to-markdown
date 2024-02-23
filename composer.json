@@ -1,0 +1,46 @@
+{
+    "name": "cable8mm/import-from-db-to-jekyll",
+    "description": "DB to Jekyll tools",
+    "keywords": [
+        "command",
+        "php",
+        "jekyll",
+        "database",
+        "import"
+    ],
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samgu Lee",
+            "email": "cable8mm@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.14",
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cable8mm\\ImportFromDbToJekyll\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cable8mm\\ImportFromDbToJekyll\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "test": [
+            "./vendor/bin/phpunit tests"
+        ],
+        "lint": [
+            "./vendor/bin/pint"
+        ]
+    }
+}
