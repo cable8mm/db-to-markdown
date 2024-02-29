@@ -1,10 +1,12 @@
 <?php
+
 namespace Cable8mm\ImportFromDbToJekyll;
 
 use Dotenv\Dotenv;
 use Medoo\Medoo;
 
-class DB {
+class DB
+{
     private static $instance = null;
 
     private Medoo $connection;

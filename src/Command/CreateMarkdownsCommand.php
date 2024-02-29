@@ -3,7 +3,6 @@
 namespace Cable8mm\ImportFromDbToJekyll\Command;
 
 use Cable8mm\ImportFromDbToJekyll\DB;
-use Dotenv\Dotenv;
 use Medoo\Medoo;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
