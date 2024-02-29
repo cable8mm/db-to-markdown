@@ -3,10 +3,12 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
+use Cable8mm\ImportFromDbToJekyll\Command\CreateMarkdownsCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
 // ... register commands
+$application->add(new CreateMarkdownsCommand());
 
 $application->run();
