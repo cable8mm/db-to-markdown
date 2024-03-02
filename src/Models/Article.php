@@ -3,63 +3,75 @@
 namespace Cable8mm\ImportFromDbToJekyll\Models;
 
 use Carbon\Carbon;
-use InvalidArgumentException;
+use League\HTMLToMarkdown\HtmlConverter;
 
 class Article
 {
     // below properties follow by https://import.jekyllrb.com/docs/csv/
+    public string $title;
 
-    protected string $title;
+    public string $permalink;
 
-    protected string $permalink;
+    public string $body;
 
-    protected string $body;
+    public Carbon $publishedAt;
 
-    protected Carbon $published_at;
+    private array $map;
 
-    protected string $filter;
+    /**
+     * A row from database.
+     */
+    private array $row;
 
-    private const VALID_FILTERS = ['markdown', 'textile'];
+    const EXTENSION = 'markdown';
 
-    // Setters
-
-    public function title(string $title): static
+    public function __construct()
     {
-        $this->title = $title;
-
-        return new static();
     }
 
-    public function permalink(string $permalink): static
+    private function title(): void
     {
-        $this->permalink = $permalink;
+        if (is_string($this->map['title'])) {
+            $this->title = $this->row[$this->map['title']];
 
-        return new static();
-    }
-
-    public function body(string $body): static
-    {
-        $this->body = $body;
-
-        return new static();
-    }
-
-    public function publishedAt(string $publishedAt): static
-    {
-        $this->published_at = new Carbon($publishedAt);
-
-        return new static();
-    }
-
-    public function filter(string $filter): static
-    {
-        if (in_array($filter, self::VALID_FILTERS)) {
-            throw new InvalidArgumentException('This filter isn\'t invalid. Please to change filter\'s name.');
+            return;
         }
 
-        $this->filter = $filter;
+        $title = '';
 
-        return new static();
+        foreach ($this->map['title'] as $item) {
+            $title .= $this->row[$item].' ';
+        }
+
+        $this->title = preg_replace('/\s+$/', '', $title);
+    }
+
+    private function permalink(): void
+    {
+        $prefix = $this->publishedAt()->format('Y-m-d');
+
+        $this->permalink = $prefix.'-'.preg_replace('/[_ ]/', '-', $this->row[$this->map['permalink']]).'.'.self::EXTENSION;
+    }
+
+    private function body(): void
+    {
+        $converter = new HtmlConverter();
+
+        $this->body = strip_tags($converter->convert($this->row[$this->map['body']]));
+    }
+
+    private function publishedAt(): Carbon
+    {
+        if (! empty($this->publishedAt)) {
+            return $this->publishedAt;
+        }
+
+        return $this->publishedAt = new Carbon($this->row[$this->map['published_at']]);
+    }
+
+    public function markdown(): string
+    {
+        return $this->body;
     }
 
     public function toArray(): array
@@ -68,8 +80,28 @@ class Article
             'title' => $this->title,
             'permalink' => $this->permalink,
             'body' => $this->body,
-            'published_at' => $this->published_at,
-            'filter' => $this->filter,
+            'published_at' => $this->publishedAt,
         ];
+    }
+
+    public function in(array $row): static
+    {
+        $this->row = $row;
+
+        $this->title();
+        $this->permalink();
+        $this->body();
+        $this->publishedAt();
+
+        return $this;
+    }
+
+    public static function make($map): static
+    {
+        $article = new static();
+
+        $article->map = $map;
+
+        return $article;
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Cable8mm\ImportFromDbToJekyll\Mappers;
 
-use ArrayAccess;
-
 use function Cable8mm\ArrayFlatten\array_flatten;
 
 class Mapper
@@ -36,7 +34,18 @@ class Mapper
         return array_flatten($properties);
     }
 
-    // Required methods for ArrayAccess
+    public function where(): array
+    {
+        $flatten = $this->fields();
+
+        $where = [];
+
+        foreach ($flatten as $item) {
+            $where[$item.'[!]'] = null;
+        }
+
+        return $where;
+    }
 
     public static function getMap($filename)
     {
