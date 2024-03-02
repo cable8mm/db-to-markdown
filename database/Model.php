@@ -91,7 +91,7 @@ class Model
         return $this->connection->insert($this->table, $factory);
     }
 
-    public function getField(string $field, array|string $title, string $permalink, string $body, string $published_at): array
+    public function getField(string $field, array|string $title, string $slug, string $body, string $published_at): array
     {
         if ($field === 'id') {
             return ['id' => [
@@ -109,7 +109,7 @@ class Model
             ];
         }
 
-        if ($field === $permalink) {
+        if ($field === $slug) {
             $description = [
                 'varchar',
             ];
@@ -134,7 +134,7 @@ class Model
         return [$field => $description];
     }
 
-    public function getFake(string $field, array|string $title, string $permalink, string $body, string $published_at): array|bool
+    public function getFake(string $field, array|string $title, string $slug, string $body, string $published_at): array|bool
     {
         if ($field === 'id') {
             return false;
@@ -146,8 +146,8 @@ class Model
             $fake = $this->faker->sentence();
         }
 
-        if ($field === $permalink) {
-            $fake = $this->faker->sentence();
+        if ($field === $slug) {
+            $fake = $this->faker->word();
         }
 
         if ($field === $body) {
