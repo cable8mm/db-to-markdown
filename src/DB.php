@@ -13,8 +13,7 @@ class DB
 
     private function __construct()
     {
-        $dotenv = Dotenv::createImmutable(getcwd());
-        $dotenv->load();
+        self::loadEnv();
 
         $params = [
             'type' => $_ENV['DB_CONNECTION'],
@@ -30,6 +29,12 @@ class DB
         $this->connection = new Medoo($params);
     }
 
+    private static function loadEnv(): void
+    {
+        $dotenv = Dotenv::createImmutable(getcwd());
+        $dotenv->load();
+    }
+
     public static function getInstance(): static
     {
         if (self::$instance === null) {
@@ -42,5 +47,14 @@ class DB
     public function getConnection(): Medoo
     {
         return $this->connection;
+    }
+
+    public static function table(): string
+    {
+        if (! isset($_ENV['DB_TABLE'])) {
+            self::loadEnv();
+        }
+
+        return $_ENV['DB_TABLE'];
     }
 }
