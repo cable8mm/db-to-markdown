@@ -7,6 +7,7 @@
 [![release date](https://img.shields.io/github/release-date/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/releases)
 [![minimum PHP version](https://img.shields.io/badge/php-%3E%3D_8.0.0-8892BF.svg?logo=php)](https://github.com/cable8mm/db-to-markdown)
 ![GitHub License](https://img.shields.io/github/license/cable8mm/db-to-markdown)
+![Static Badge](https://img.shields.io/badge/Symfony-Console-black?logo=symfony)
 
 This is a file generator specifically designed for generating markdown files.
 
