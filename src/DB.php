@@ -9,7 +9,7 @@ class DB
 {
     private static $instance = null;
 
-    private Medoo $connection;
+    private ?Medoo $connection = null;
 
     public function __construct()
     {
@@ -26,7 +26,9 @@ class DB
             'port' => $_ENV['DB_PORT'],
         ];
 
-        $this->connection = new Medoo($params);
+        if (! empty($_ENV['DB_DATABASE'])) {
+            $this->connection = new Medoo($params);
+        }
     }
 
     private static function loadEnv(): void
@@ -42,6 +44,11 @@ class DB
         }
 
         return self::$instance;
+    }
+
+    public function isConnected(): bool
+    {
+        return ! is_null($this->connection);
     }
 
     public function getConnection(): Medoo
