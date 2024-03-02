@@ -1,10 +1,13 @@
 # About
 
-[![Tests](https://github.com/cable8mm/import-from-db-to-jekyll/actions/workflows/tests.yml/badge.svg)](https://github.com/cable8mm/import-from-db-to-jekyll/actions/workflows/tests.yml)
-[![Coding style PHP](https://github.com/cable8mm/import-from-db-to-jekyll/actions/workflows/coding-style-php.yml/badge.svg)](https://github.com/cable8mm/import-from-db-to-jekyll/actions/workflows/coding-style-php.yml)
-[![release date](https://img.shields.io/github/release-date/cable8mm/import-from-db-to-jekyll)](https://github.com/cable8mm/import-from-db-to-jekyll/releases)
-[![minimum PHP version](https://img.shields.io/badge/php-%3E%3D_8.2.0-8892BF.svg)](https://github.com/cable8mm/import-from-db-to-jekyll)
-![GitHub License](https://img.shields.io/github/license/cable8mm/import-from-db-to-jekyll)
+[![Tests](https://github.com/cable8mm/db-to-markdown/actions/workflows/tests.yml/badge.svg)](https://github.com/cable8mm/db-to-markdown/actions/workflows/tests.yml)
+[![Coding style PHP](https://github.com/cable8mm/db-to-markdown/actions/workflows/coding-style-php.yml/badge.svg)](https://github.com/cable8mm/db-to-markdown/actions/workflows/coding-style-php.yml)
+[![Latest Stable Version](http://poser.pugx.org/cable8mm/db-to-markdown/v)](https://packagist.org/packages/cable8mm/db-to-markdown)
+[![Total Downloads](http://poser.pugx.org/cable8mm/db-to-markdown/downloads)](https://packagist.org/packages/cable8mm/db-to-markdown)
+[![release date](https://img.shields.io/github/release-date/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/releases)
+[![minimum PHP version](https://img.shields.io/badge/php-%3E%3D_8.0.0-8892BF.svg?logo=php)](https://github.com/cable8mm/db-to-markdown)
+![GitHub License](https://img.shields.io/github/license/cable8mm/db-to-markdown)
+![Static Badge](https://img.shields.io/badge/Symfony-Console-black?logo=symfony)
 
 This is a file generator specifically designed for generating markdown files.
 
