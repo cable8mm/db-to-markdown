@@ -3,6 +3,7 @@
 namespace Cable8mm\DbToMarkdown\Command;
 
 use Cable8mm\DbToMarkdown\DB;
+use Cable8mm\DbToMarkdown\Formats\Markdown;
 use Cable8mm\DbToMarkdown\Mappers\Mapper;
 use Cable8mm\DbToMarkdown\Models\Article;
 use Medoo\Medoo;
@@ -15,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
     name: 'create-markdowns',
     description: 'Creates markdowns. run bin/console create-markdowns',
     hidden: false,
-    aliases: ['add-markdowns']
+    aliases: ['add-markdowns', 'create-md']
 )]
 class CreateMarkdownsCommand extends Command
 {
@@ -42,7 +43,13 @@ class CreateMarkdownsCommand extends Command
         foreach ($articles as $row) {
             $article = Article::make($map)->in($row);
 
-            file_put_contents(__DIR__.'/../../dist/'.$article->permalink, $article->markdown());
+            $markdown = new Markdown(
+                date: $article->publishedAt,
+                body: $article->markdown(),
+                slug: $article->slug
+            );
+
+            file_put_contents(__DIR__.'/../../dist/'.$markdown->path(), $markdown->render());
         }
 
         return Command::SUCCESS;

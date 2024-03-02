@@ -10,7 +10,7 @@ class Article
     // below properties follow by https://import.jekyllrb.com/docs/csv/
     public string $title;
 
-    public string $permalink;
+    public string $slug;
 
     public string $body;
 
@@ -46,11 +46,9 @@ class Article
         $this->title = preg_replace('/\s+$/', '', $title);
     }
 
-    private function permalink(): void
+    private function slug(): void
     {
-        $prefix = $this->publishedAt()->format('Y-m-d');
-
-        $this->permalink = $prefix.'-'.preg_replace('/[_ ]/', '-', $this->row[$this->map['permalink']]).'.'.self::EXTENSION;
+        $this->slug = preg_replace('/[_ ]/', '-', $this->row[$this->map['slug']]);
     }
 
     private function body(): void
@@ -78,7 +76,7 @@ class Article
     {
         return [
             'title' => $this->title,
-            'permalink' => $this->permalink,
+            'slug' => $this->slug,
             'body' => $this->body,
             'published_at' => $this->publishedAt,
         ];
@@ -89,7 +87,7 @@ class Article
         $this->row = $row;
 
         $this->title();
-        $this->permalink();
+        $this->slug();
         $this->body();
         $this->publishedAt();
 
