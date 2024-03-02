@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'create-markdowns',
-    description: 'Creates markdowns.',
+    description: 'Creates markdowns. run bin/console create-markdowns',
     hidden: false,
     aliases: ['add-markdowns']
 )]
@@ -29,7 +29,7 @@ class CreateMarkdownsCommand extends Command
     /**
      * Create Markdown files
      *
-     * Run ./bin/console create-markdowns
+     * Run bin/console create-markdowns
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
