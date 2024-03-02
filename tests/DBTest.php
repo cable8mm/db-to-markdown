@@ -1,8 +1,8 @@
 <?php
 
-namespace Cable8mm\ImportFromDbToJekyll\Test;
+namespace Cable8mm\DbToMarkdown\Test;
 
-use Cable8mm\ImportFromDbToJekyll\DB;
+use Cable8mm\DbToMarkdown\DB;
 use PHPUnit\Framework\TestCase;
 
 final class DBTest extends TestCase

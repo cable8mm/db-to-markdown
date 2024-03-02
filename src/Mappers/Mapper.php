@@ -1,6 +1,6 @@
 <?php
 
-namespace Cable8mm\ImportFromDbToJekyll\Mappers;
+namespace Cable8mm\DbToMarkdown\Mappers;
 
 use function Cable8mm\ArrayFlatten\array_flatten;
 
@@ -8,16 +8,16 @@ class Mapper
 {
     private string|array $title;
 
-    private string $permalink;
+    private string $slug;
 
     private string $body;
 
     private string|array $published_at;
 
-    public function __construct(string|array $title, string $permalink, string $body, string|array $published_at)
+    public function __construct(string|array $title, string $slug, string $body, string|array $published_at)
     {
         $this->title = $title;
-        $this->permalink = $permalink;
+        $this->slug = $slug;
         $this->body = $body;
         $this->published_at = $published_at;
     }
@@ -26,7 +26,7 @@ class Mapper
     {
         $properties = [
             $this->title,
-            $this->permalink,
+            $this->slug,
             $this->body,
             $this->published_at,
         ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cable8mm\ImportFromDbToJekyll;
+namespace Cable8mm\DbToMarkdown;
 
 use Dotenv\Dotenv;
 use Medoo\Medoo;

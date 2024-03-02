@@ -1,6 +1,6 @@
 <?php
 
-namespace Cable8mm\ImportFromDbToJekyll\Test;
+namespace Cable8mm\DbToMarkdown\Test;
 
 use Cable8mm\Database\Model;
 use Cable8mm\Database\Seeder;

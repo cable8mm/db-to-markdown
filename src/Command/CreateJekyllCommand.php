@@ -3,7 +3,7 @@
 namespace Cable8mm\DbToMarkdown\Command;
 
 use Cable8mm\DbToMarkdown\DB;
-use Cable8mm\DbToMarkdown\Formats\Markdown;
+use Cable8mm\DbToMarkdown\Formats\Jekyll;
 use Cable8mm\DbToMarkdown\Mappers\Mapper;
 use Cable8mm\DbToMarkdown\Models\Article;
 use Medoo\Medoo;
@@ -13,12 +13,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'create-markdowns',
-    description: 'Creates markdowns. run bin/console create-markdowns',
+    name: 'create-jekyll',
+    description: 'Creates markdowns. run bin/console create-jekyll',
     hidden: false,
-    aliases: ['add-markdowns', 'create-md']
+    aliases: ['add-jekyll']
 )]
-class CreateMarkdownsCommand extends Command
+class CreateJekyllCommand extends Command
 {
     private Medoo $database;
 
@@ -28,9 +28,9 @@ class CreateMarkdownsCommand extends Command
     }
 
     /**
-     * Create Markdown files
+     * Create Markdown files for Jekyll
      *
-     * Run bin/console create-markdowns
+     * Run bin/console create-jekyll
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -43,13 +43,16 @@ class CreateMarkdownsCommand extends Command
         foreach ($articles as $row) {
             $article = Article::make($map)->in($row);
 
-            $markdown = new Markdown(
+            $jekyll = new Jekyll(
+                layout: 'single',
+                title: $article->title,
                 date: $article->publishedAt,
+                author: 'Samgu Lee',
                 body: $article->markdown(),
                 slug: $article->slug
             );
 
-            file_put_contents(__DIR__.'/../../dist/'.$markdown->path(), $markdown->render());
+            file_put_contents(__DIR__.'/../../dist/'.$jekyll->path(), $jekyll->render());
         }
 
         return Command::SUCCESS;
