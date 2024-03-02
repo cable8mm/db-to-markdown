@@ -1,8 +1,8 @@
 <?php
 
-namespace Cable8mm\ImportFromDbToJekyll\Command;
+namespace Cable8mm\DbToMarkdown\Command;
 
-use Cable8mm\ImportFromDbToJekyll\Models\Article;
+use Cable8mm\DbToMarkdown\Models\Article;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

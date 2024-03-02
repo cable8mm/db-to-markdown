@@ -1,6 +1,6 @@
 <?php
 
-namespace Cable8mm\ImportFromDbToJekyll\Models;
+namespace Cable8mm\DbToMarkdown\Models;
 
 use Carbon\Carbon;
 use League\HTMLToMarkdown\HtmlConverter;

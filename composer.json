@@ -1,6 +1,6 @@
 {
-    "name": "cable8mm/import-from-db-to-jekyll",
-    "description": "DB to Jekyll tools",
+    "name": "cable8mm/db-to-markdown",
+    "description": "DB to markdown generator",
     "keywords": [
         "command",
         "php",
@@ -33,13 +33,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Cable8mm\\ImportFromDbToJekyll\\": "src/",
+            "Cable8mm\\DbToMarkdown\\": "src/",
             "Cable8mm\\Database\\": "database/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Cable8mm\\ImportFromDbToJekyll\\Tests\\": "tests/"
+            "Cable8mm\\DbToMarkdown\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",

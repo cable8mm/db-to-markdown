@@ -1,8 +1,8 @@
 <?php
 
-namespace Cable8mm\ImportFromDbToJekyll\Test;
+namespace Cable8mm\DbToMarkdown\Test;
 
-use Cable8mm\ImportFromDbToJekyll\Mappers\Mapper;
+use Cable8mm\DbToMarkdown\Mappers\Mapper;
 use PHPUnit\Framework\TestCase;
 
 final class MapperTest extends TestCase

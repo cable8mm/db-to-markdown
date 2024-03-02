@@ -1,6 +1,6 @@
 <?php
 
-namespace Cable8mm\ImportFromDbToJekyll\Mappers;
+namespace Cable8mm\DbToMarkdown\Mappers;
 
 use function Cable8mm\ArrayFlatten\array_flatten;
 

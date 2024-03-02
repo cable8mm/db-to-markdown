@@ -2,8 +2,8 @@
 
 namespace Cable8mm\Database;
 
-use Cable8mm\ImportFromDbToJekyll\DB;
-use Cable8mm\ImportFromDbToJekyll\Mappers\Mapper;
+use Cable8mm\DbToMarkdown\DB;
+use Cable8mm\DbToMarkdown\Mappers\Mapper;
 use Faker\Factory;
 use Faker\Generator;
 use InvalidArgumentException;

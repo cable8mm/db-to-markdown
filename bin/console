@@ -3,8 +3,8 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-use Cable8mm\ImportFromDbToJekyll\Command\CreateMarkdownsCommand;
-use Cable8mm\ImportFromDbToJekyll\Command\DeleteMarkdownsCommand;
+use Cable8mm\DbToMarkdown\Command\CreateMarkdownsCommand;
+use Cable8mm\DbToMarkdown\Command\DeleteMarkdownsCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
