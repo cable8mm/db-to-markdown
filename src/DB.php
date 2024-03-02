@@ -11,7 +11,7 @@ class DB
 
     private Medoo $connection;
 
-    private function __construct()
+    public function __construct()
     {
         self::loadEnv();
 

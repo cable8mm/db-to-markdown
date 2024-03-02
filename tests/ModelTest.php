@@ -10,14 +10,14 @@ final class ModelTest extends TestCase
 {
     public function test_can_table_make()
     {
-        $pdo = (new Model())->up();
+        $pdo = Model::getInstance()->up();
 
         $this->assertInstanceOf(PDOStatement::class, $pdo);
     }
 
     public function test_can_table_drop()
     {
-        $pdo = (new Model())->down();
+        $pdo = Model::getInstance()->down();
 
         $this->assertInstanceOf(PDOStatement::class, $pdo);
     }

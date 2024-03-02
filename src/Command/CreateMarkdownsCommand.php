@@ -3,6 +3,7 @@
 namespace Cable8mm\ImportFromDbToJekyll\Command;
 
 use Cable8mm\ImportFromDbToJekyll\DB;
+use Cable8mm\ImportFromDbToJekyll\Mappers\Mapper;
 use Medoo\Medoo;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -26,7 +27,11 @@ class CreateMarkdownsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln($this->database->info()['driver']);
+        $map = Mapper::getMap('DogStory');
+
+        $mapper = new Mapper(...$map);
+
+        $articles = $this->database->select(DB::table(), $mapper->fields());
 
         return Command::SUCCESS;
     }
