@@ -2,19 +2,18 @@
 
 namespace Cable8mm\DbToMarkdown\Command;
 
-use Cable8mm\DbToMarkdown\Models\Article;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'delete-markdowns',
-    description: 'Delete markdowns. run bin/console delete-markdowns',
+    name: 'clean',
+    description: 'Delete markdowns. run bin/console clean',
     hidden: false,
-    aliases: ['remove-markdowns']
+    aliases: ['trash', 'empty']
 )]
-class DeleteMarkdownsCommand extends Command
+class CleanCommand extends Command
 {
     /**
      * Create Markdown files
@@ -23,7 +22,7 @@ class DeleteMarkdownsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        array_map('unlink', array_filter((array) glob(__DIR__.'/../../dist/*.'.Article::EXTENSION)));
+        array_map('unlink', array_filter((array) glob(__DIR__.'/../../dist/*.markdown')));
 
         return Command::SUCCESS;
     }

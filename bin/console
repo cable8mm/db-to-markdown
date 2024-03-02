@@ -3,14 +3,17 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
+use Cable8mm\DbToMarkdown\Command\CleanCommand;
+use Cable8mm\DbToMarkdown\Command\CreateJekyllCommand;
 use Cable8mm\DbToMarkdown\Command\CreateMarkdownsCommand;
-use Cable8mm\DbToMarkdown\Command\DeleteMarkdownsCommand;
+use Cable8mm\DbToMarkdown\Command\EmptyCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
 // ... register commands
 $application->add(new CreateMarkdownsCommand());
-$application->add(new DeleteMarkdownsCommand());
+$application->add(new CleanCommand());
+$application->add(new CreateJekyllCommand());
 
 $application->run();
