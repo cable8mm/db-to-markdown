@@ -1,4 +1,4 @@
-# About
+# DB to markdown
 
 [![Tests](https://github.com/cable8mm/db-to-markdown/actions/workflows/tests.yml/badge.svg)](https://github.com/cable8mm/db-to-markdown/actions/workflows/tests.yml)
 [![Coding style PHP](https://github.com/cable8mm/db-to-markdown/actions/workflows/coding-style-php.yml/badge.svg)](https://github.com/cable8mm/db-to-markdown/actions/workflows/coding-style-php.yml)
@@ -9,7 +9,7 @@
 ![GitHub License](https://img.shields.io/github/license/cable8mm/db-to-markdown)
 ![Static Badge](https://img.shields.io/badge/Symfony-Console-black?logo=symfony)
 
-This is a file generator specifically designed for generating markdown files.
+This tool is specifically designed for generating markdown files.
 
 ## Install
 
@@ -30,7 +30,7 @@ bin/console clean
 # Clear the contents of the dist folder.
 ```
 
-## How to create your own commands
+## How to Develop Custom Commands
 
 ### Step one
 
@@ -56,4 +56,4 @@ composer test
 
 ## License
 
-The Import from DB to Jekyll project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The DB to markdown project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
