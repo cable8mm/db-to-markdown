@@ -4,11 +4,13 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use Cable8mm\ImportFromDbToJekyll\Command\CreateMarkdownsCommand;
+use Cable8mm\ImportFromDbToJekyll\Command\DeleteMarkdownsCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
 // ... register commands
 $application->add(new CreateMarkdownsCommand());
+$application->add(new DeleteMarkdownsCommand());
 
 $application->run();
