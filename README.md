@@ -15,6 +15,7 @@ This tool is specialized in generating Markdown files, particularly designed for
 
 - [x] Any schema can generate Markdown in any desired format
 - [x] Effortlessly incorporate your custom mapper and command
+- [x] Implement callback body and datetime functionality
 - [x] Database testing is supported
 
 ## Support & Tested

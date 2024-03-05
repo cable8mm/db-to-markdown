@@ -14,7 +14,11 @@ class Article
 
     public string $body;
 
+    private $bodyCallbacks;
+
     public Carbon $publishedAt;
+
+    private ?int $addHours = null;
 
     private array $map;
 
@@ -55,7 +59,15 @@ class Article
     {
         $converter = new HtmlConverter();
 
-        $this->body = strip_tags($converter->convert($this->row[$this->map['body']]));
+        $body = $this->row[$this->map['body']];
+
+        if (! is_null($this->bodyCallbacks)) {
+            foreach ($this->bodyCallbacks as $callback) {
+                $body = ($callback)($body);
+            }
+        }
+
+        $this->body = strip_tags($converter->convert($body));
     }
 
     private function publishedAt(): Carbon
@@ -64,7 +76,13 @@ class Article
             return $this->publishedAt;
         }
 
-        return $this->publishedAt = new Carbon($this->row[$this->map['published_at']]);
+        $publishedAt = new Carbon($this->row[$this->map['published_at']]);
+
+        if (! is_null($this->addHours)) {
+            $publishedAt = $publishedAt->addHours($this->addHours);
+        }
+
+        return $this->publishedAt = $publishedAt;
     }
 
     public function markdown(): string
@@ -90,6 +108,20 @@ class Article
         $this->slug();
         $this->body();
         $this->publishedAt();
+
+        return $this;
+    }
+
+    public function setBodyCallback(...$callbacks): static
+    {
+        $this->bodyCallbacks = $callbacks;
+
+        return $this;
+    }
+
+    public function setAddHours(int $hours): static
+    {
+        $this->addHours = $hours;
 
         return $this;
     }
