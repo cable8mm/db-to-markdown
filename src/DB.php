@@ -15,20 +15,29 @@ class DB
     {
         self::loadEnv();
 
-        $params = [
-            'type' => $_ENV['DB_CONNECTION'],
-            'host' => $_ENV['DB_HOST'],
-            'database' => $_ENV['DB_DATABASE'],
-            'username' => $_ENV['DB_USERNAME'],
-            'password' => $_ENV['DB_PASSWORD'],
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_general_ci',
-            'port' => $_ENV['DB_PORT'],
-        ];
+        $params = [];
 
-        if (! empty($_ENV['DB_DATABASE'])) {
-            $this->connection = new Medoo($params);
+        if ($_ENV['DB_CONNECTION'] == 'mysql') {
+            $params = [
+                'type' => $_ENV['DB_CONNECTION'],
+                'host' => $_ENV['DB_HOST'],
+                'database' => $_ENV['DB_DATABASE'],
+                'username' => $_ENV['DB_USERNAME'],
+                'password' => $_ENV['DB_PASSWORD'],
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_general_ci',
+                'port' => $_ENV['DB_PORT'],
+            ];
         }
+
+        if ($_ENV['DB_CONNECTION'] == 'sqlite') {
+            $params = [
+                'type' => 'sqlite',
+                'database' => __DIR__.'/database.sqlite',
+            ];
+        }
+
+        $this->connection = new Medoo($params);
     }
 
     private static function loadEnv(): void

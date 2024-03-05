@@ -95,7 +95,7 @@ class Model
     {
         if ($field === 'id') {
             return ['id' => [
-                'integer',
+                'INTEGER',
                 'NOT NULL',
                 'PRIMARY KEY',
             ]];
@@ -105,25 +105,25 @@ class Model
 
         if (is_string($title) || (is_array($title) && in_array($field, $title))) {
             $description = [
-                'varchar',
+                'VARCHAR',
             ];
         }
 
         if ($field === $slug) {
             $description = [
-                'varchar',
+                'VARCHAR',
             ];
         }
 
         if ($field === $body) {
             $description = [
-                'text',
+                'TEXT',
             ];
         }
 
         if ($field === $published_at) {
             $description = [
-                'timestamp',
+                'DATETIME',
             ];
         }
 
@@ -155,7 +155,7 @@ class Model
         }
 
         if ($field === $published_at) {
-            $fake = $this->faker->dateTime();
+            $fake = $this->faker->dateTime()->format('Y-m-d H:i:s');
         }
 
         if (empty($fake)) {
