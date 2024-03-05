@@ -23,6 +23,7 @@ class CleanCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         array_map('unlink', array_filter((array) glob(__DIR__.'/../../dist/*.markdown')));
+        array_map('unlink', array_filter((array) glob(__DIR__.'/../../dist/*.md')));
 
         return Command::SUCCESS;
     }

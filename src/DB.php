@@ -33,7 +33,7 @@ class DB
         if ($_ENV['DB_CONNECTION'] == 'sqlite') {
             $params = [
                 'type' => 'sqlite',
-                'database' => __DIR__.'/database.sqlite',
+                'database' => __DIR__.'/../database/database.sqlite',
             ];
         }
 
