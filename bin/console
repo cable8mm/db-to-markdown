@@ -7,6 +7,7 @@ use Cable8mm\DbToMarkdown\Command\CleanCommand;
 use Cable8mm\DbToMarkdown\Command\CreateJekyllCommand;
 use Cable8mm\DbToMarkdown\Command\CreateMarkdownsCommand;
 use Cable8mm\DbToMarkdown\Command\EmptyCommand;
+use Cable8mm\DbToMarkdown\Command\SeedingCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
@@ -15,5 +16,6 @@ $application = new Application();
 $application->add(new CreateMarkdownsCommand());
 $application->add(new CleanCommand());
 $application->add(new CreateJekyllCommand());
+$application->add(new SeedingCommand());
 
 $application->run();
