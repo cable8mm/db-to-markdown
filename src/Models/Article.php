@@ -3,6 +3,7 @@
 namespace Cable8mm\DbToMarkdown\Models;
 
 use Carbon\Carbon;
+use InvalidArgumentException;
 use League\HTMLToMarkdown\HtmlConverter;
 
 class Article
@@ -11,6 +12,8 @@ class Article
     public string $title;
 
     public string $slug;
+
+    public ?string $categories = null;
 
     public string $body;
 
@@ -57,6 +60,11 @@ class Article
         $this->slug = preg_replace('/[_ ]/', '-', $this->row[$this->map['slug']]);
     }
 
+    private function categories(): void
+    {
+        $this->categories = $this->row[$this->map['categories']];
+    }
+
     private function body(): void
     {
         $converter = new HtmlConverter();
@@ -97,6 +105,7 @@ class Article
         return [
             'title' => $this->title,
             'slug' => $this->slug,
+            'categories' => $this->categories,
             'body' => $this->body,
             'published_at' => $this->publishedAt,
         ];
@@ -108,6 +117,7 @@ class Article
 
         $this->title();
         $this->slug();
+        $this->categories();
         $this->body();
         $this->publishedAt();
 
@@ -124,6 +134,23 @@ class Article
     public function setAddHours(int $hours): static
     {
         $this->addHours = $hours;
+
+        return $this;
+    }
+
+    public function resolveCategories(?array $categories = null): static
+    {
+        if (! is_null($categories)) {
+            if (is_null($this->categories)) {
+                throw new InvalidArgumentException($this->slug.' slug\'s category must exist.');
+            }
+
+            if (! in_array($this->categories, array_keys($categories))) {
+                throw new InvalidArgumentException($this->categories.' is an invalid category. Categories must include one of '.implode(',', array_keys($categories)));
+            }
+
+            $this->categories = $categories[$this->categories];
+        }
 
         return $this;
     }
