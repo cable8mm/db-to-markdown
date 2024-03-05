@@ -15,6 +15,8 @@ class Article
 
     public ?string $categories = null;
 
+    private $resolveCategories;
+
     public string $body;
 
     private $bodyCallbacks;
@@ -63,6 +65,18 @@ class Article
     private function categories(): void
     {
         $this->categories = $this->row[$this->map['categories']];
+
+        if (! is_null($this->resolveCategories)) {
+            if (is_null($this->categories)) {
+                throw new InvalidArgumentException($this->slug.' slug\'s category must exist.');
+            }
+
+            if (! in_array($this->categories, array_keys($this->resolveCategories))) {
+                throw new InvalidArgumentException($this->categories.' is an invalid category. Categories must include one of '.implode(',', array_keys($this->resolveCategories)));
+            }
+
+            $this->categories = $this->resolveCategories[$this->categories];
+        }
     }
 
     private function body(): void
@@ -140,17 +154,7 @@ class Article
 
     public function resolveCategories(?array $categories = null): static
     {
-        if (! is_null($categories)) {
-            if (is_null($this->categories)) {
-                throw new InvalidArgumentException($this->slug.' slug\'s category must exist.');
-            }
-
-            if (! in_array($this->categories, array_keys($categories))) {
-                throw new InvalidArgumentException($this->categories.' is an invalid category. Categories must include one of '.implode(',', array_keys($categories)));
-            }
-
-            $this->categories = $categories[$this->categories];
-        }
+        $this->resolveCategories = $categories;
 
         return $this;
     }
