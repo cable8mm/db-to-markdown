@@ -10,6 +10,7 @@ use Medoo\Medoo;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
@@ -33,9 +34,22 @@ class CreateJekyllCommand extends Command
         '상품',
     ];
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->database = DB::getInstance()->getConnection();
+    }
+
     protected function configure()
     {
-        $this->database = DB::getInstance()->getConnection();
+        $this->addOption(
+            'output',
+            'o',
+            InputOption::VALUE_OPTIONAL,
+            'To which destination do the files output?',
+            __DIR__.'/../../dist/'
+        );
     }
 
     /**
@@ -53,28 +67,28 @@ class CreateJekyllCommand extends Command
 
         foreach ($articles as $row) {
             $article = Article::make($map)
-                ->in($row)
                 ->setBodyCallback(
                     function ($item) {
-                        return preg_replace('/<img[^>]+>/', '', $item);
+                        return preg_replace('/<img[^>]+>/u', '', $item);
                     }, function ($item) {
-                        return preg_replace('/\\\\\[[^\]]+\]\n?/', '', $item);
+                        return preg_replace('/\[[^\]]+\]\n?/u', '', $item);
                     }
                 )
                 ->setAddHours(24 * 365 + 24 * 120)
-                ->resolveCategories($this->categories);
+                ->resolveCategories($this->categories)
+                ->in($row);
 
             $jekyll = new Jekyll(
                 layout: 'post',
                 title: $article->title,
                 date: $article->publishedAt,
-                author: 'Samgu Lee',
+                author: 'Companimal',
                 body: $article->markdown(),
                 slug: $article->slug,
                 categories: $article->categories,
             );
 
-            file_put_contents(__DIR__.'/../../dist/'.$jekyll->path(), $jekyll->render());
+            file_put_contents($input->getOption('output').$jekyll->path(), $jekyll->render());
         }
 
         return Command::SUCCESS;

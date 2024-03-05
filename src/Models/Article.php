@@ -27,6 +27,8 @@ class Article
 
     private array $map;
 
+    private HtmlConverter $converter;
+
     /**
      * A row from database.
      */
@@ -36,6 +38,7 @@ class Article
 
     public function __construct()
     {
+        $this->converter = new HtmlConverter();
     }
 
     private function title(): void
@@ -81,8 +84,6 @@ class Article
 
     private function body(): void
     {
-        $converter = new HtmlConverter();
-
         $body = $this->row[$this->map['body']];
 
         if (! is_null($this->bodyCallbacks)) {
@@ -91,7 +92,7 @@ class Article
             }
         }
 
-        $this->body = strip_tags($converter->convert($body));
+        $this->body = strip_tags($this->converter->convert($body));
     }
 
     private function publishedAt(): Carbon
