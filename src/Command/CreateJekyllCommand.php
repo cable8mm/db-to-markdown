@@ -53,7 +53,7 @@ class CreateJekyllCommand extends Command
                 ->in($row);
 
             $jekyll = new Jekyll(
-                layout: 'single',
+                layout: 'post',
                 title: $article->title,
                 date: $article->publishedAt,
                 author: 'Samgu Lee',
