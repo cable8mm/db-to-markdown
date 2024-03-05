@@ -1,13 +1,13 @@
 # DB to markdown
 
-[![Tests](https://github.com/cable8mm/db-to-markdown/actions/workflows/tests.yml/badge.svg)](https://github.com/cable8mm/db-to-markdown/actions/workflows/tests.yml)
-[![Coding style PHP](https://github.com/cable8mm/db-to-markdown/actions/workflows/coding-style-php.yml/badge.svg)](https://github.com/cable8mm/db-to-markdown/actions/workflows/coding-style-php.yml)
-[![Latest Stable Version](http://poser.pugx.org/cable8mm/db-to-markdown/v)](https://packagist.org/packages/cable8mm/db-to-markdown)
-[![Total Downloads](http://poser.pugx.org/cable8mm/db-to-markdown/downloads)](https://packagist.org/packages/cable8mm/db-to-markdown)
-[![release date](https://img.shields.io/github/release-date/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/releases)
-[![minimum PHP version](https://img.shields.io/badge/php-%3E%3D_8.0.0-8892BF.svg?logo=php)](https://github.com/cable8mm/db-to-markdown)
-![GitHub License](https://img.shields.io/github/license/cable8mm/db-to-markdown)
-![Static Badge](https://img.shields.io/badge/Symfony-Console-black?logo=symfony)
+[![code-style](https://github.com/cable8mm/db-to-markdown/actions/workflows/code-style.yml/badge.svg)](https://github.com/cable8mm/db-to-markdown/actions/workflows/code-style.yml)
+[![run-tests](https://github.com/cable8mm/db-to-markdown/actions/workflows/run-tests.yml/badge.svg)](https://github.com/cable8mm/db-to-markdown/actions/workflows/run-tests.yml)
+[![Packagist Version](https://img.shields.io/packagist/v/cable8mm/db-to-markdown)](https://packagist.org/packages/cable8mm/db-to-markdown)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/cable8mm/db-to-markdown)](https://packagist.org/packages/cable8mm/db-to-markdown/stats)
+[![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/cable8mm/db-to-markdown/php)](https://packagist.org/packages/cable8mm/db-to-markdown)
+![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/cable8mm/db-to-markdown/symfony%2Fconsole)
+[![Packagist Stars](https://img.shields.io/packagist/stars/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/stargazers)
+[![Packagist License](https://img.shields.io/packagist/l/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/blob/main/LICENSE.md)
 
 This tool is specifically designed for generating markdown files.
 
@@ -18,6 +18,15 @@ composer create-project cable8mm/db-to-markdown
 ```
 
 ## Usage
+
+Configure `.env` to connect to your own database. If `.env` configuration is not provided, SQLite connection is established.
+
+```sh
+bin/console seeding
+# If `.env` configuration is not provided, seeding must be performed.
+```
+
+Database connection is established,
 
 ```sh
 bin/console create-md
