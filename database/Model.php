@@ -23,7 +23,7 @@ class Model
     {
         $this->connection = new Medoo([
             'type' => 'sqlite',
-            'database' => __DIR__.'/database.sqlite',
+            'database' => __DIR__.'/../database/database.sqlite',
         ]);
 
         $this->table = DB::table();
@@ -91,7 +91,7 @@ class Model
         return $this->connection->insert($this->table, $factory);
     }
 
-    public function getField(string $field, array|string $title, string $slug, string $body, string $published_at): array
+    public function getField(string $field, array|string $title, string $slug, string $categories, string $body, string $published_at): array
     {
         if ($field === 'id') {
             return ['id' => [
@@ -110,6 +110,12 @@ class Model
         }
 
         if ($field === $slug) {
+            $description = [
+                'VARCHAR',
+            ];
+        }
+
+        if ($field === $categories) {
             $description = [
                 'VARCHAR',
             ];
@@ -134,7 +140,7 @@ class Model
         return [$field => $description];
     }
 
-    public function getFake(string $field, array|string $title, string $slug, string $body, string $published_at): array|bool
+    public function getFake(string $field, array|string $title, string $slug, string $categories, string $body, string $published_at): array|bool
     {
         if ($field === 'id') {
             return false;
@@ -147,6 +153,10 @@ class Model
         }
 
         if ($field === $slug) {
+            $fake = $this->faker->word();
+        }
+
+        if ($field === $categories) {
             $fake = $this->faker->word();
         }
 

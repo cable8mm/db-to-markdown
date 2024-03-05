@@ -22,6 +22,17 @@ class CreateJekyllCommand extends Command
 {
     private Medoo $database;
 
+    private array $categories = [
+        0 => '기타',
+        '행동+심리',
+        '의료/건강',
+        '감동',
+        '입양',
+        '재미',
+        '장소',
+        '상품',
+    ];
+
     protected function configure()
     {
         $this->database = DB::getInstance()->getConnection();
@@ -42,6 +53,7 @@ class CreateJekyllCommand extends Command
 
         foreach ($articles as $row) {
             $article = Article::make($map)
+                ->in($row)
                 ->setBodyCallback(
                     function ($item) {
                         return preg_replace('/<img[^>]+>/', '', $item);
@@ -50,7 +62,7 @@ class CreateJekyllCommand extends Command
                     }
                 )
                 ->setAddHours(24 * 365 + 24 * 120)
-                ->in($row);
+                ->resolveCategories($this->categories);
 
             $jekyll = new Jekyll(
                 layout: 'post',
@@ -58,7 +70,8 @@ class CreateJekyllCommand extends Command
                 date: $article->publishedAt,
                 author: 'Samgu Lee',
                 body: $article->markdown(),
-                slug: $article->slug
+                slug: $article->slug,
+                categories: $article->categories,
             );
 
             file_put_contents(__DIR__.'/../../dist/'.$jekyll->path(), $jekyll->render());

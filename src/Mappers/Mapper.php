@@ -10,14 +10,17 @@ class Mapper
 
     private string $slug;
 
+    private string $categories;
+
     private string $body;
 
     private string|array $published_at;
 
-    public function __construct(string|array $title, string $slug, string $body, string|array $published_at)
+    public function __construct(string|array $title, string $slug, string $categories, string $body, string|array $published_at)
     {
         $this->title = $title;
         $this->slug = $slug;
+        $this->categories = $categories;
         $this->body = $body;
         $this->published_at = $published_at;
     }
@@ -27,6 +30,7 @@ class Mapper
         $properties = [
             $this->title,
             $this->slug,
+            $this->categories,
             $this->body,
             $this->published_at,
         ];
