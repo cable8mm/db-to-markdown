@@ -41,7 +41,16 @@ class CreateJekyllCommand extends Command
         $articles = $this->database->select(DB::table(), $mapper->fields(), $mapper->where());
 
         foreach ($articles as $row) {
-            $article = Article::make($map)->in($row);
+            $article = Article::make($map)
+                ->setBodyCallback(
+                    function ($item) {
+                        return preg_replace('/<img[^>]+>/', '', $item);
+                    }, function ($item) {
+                        return preg_replace('/\\\\\[[^\]]+\]\n?/', '', $item);
+                    }
+                )
+                ->setAddHours(24 * 365 + 24 * 120)
+                ->in($row);
 
             $jekyll = new Jekyll(
                 layout: 'single',
