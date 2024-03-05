@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.2.0 - 2024-03-05
+
+### What's Changed
+
+* Rename class names and organize code by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/13
+* Implement callback body and datetime functionality by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/14
+
+**Full Changelog**: https://github.com/cable8mm/db-to-markdown/compare/v1.1.0...v1.2.0
+
 ## v1.1.0 - 2024-03-05
 
 ### What's Changed
