@@ -47,7 +47,9 @@ class Article
             $title .= $this->row[$item].' ';
         }
 
-        $this->title = preg_replace('/\s+$/', '', $title);
+        $title = preg_replace('/\s+$/', '', $title);
+
+        $this->title = preg_replace('/"/', '\"', $title);
     }
 
     private function slug(): void
