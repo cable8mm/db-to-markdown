@@ -9,9 +9,21 @@
 [![Packagist Stars](https://img.shields.io/packagist/stars/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/stargazers)
 [![Packagist License](https://img.shields.io/packagist/l/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/blob/main/LICENSE.md)
 
-This tool is specifically designed for generating markdown files.
+This tool is specialized in generating Markdown files, particularly designed for creating Jekyll Markdown documents from a database. You can generate your own Markdown, such as Jekyll, Astro, Gatsby, or any other format you prefer.
 
-## Install
+## Features
+
+- [x] Any schema can generate Markdown in any desired format
+- [x] Effortlessly incorporate your custom mapper and command
+- [x] Database testing is supported
+
+## Support & Tested
+
+| Versions  | PHP 8.0.2 | PHP 8.1.\* | PHP 8.2.\* | PHP 8.3.\* |
+| :-------: | :-------: | :--------: | :--------: | :--------: |
+| Available |    ✅     |     ✅     |     ✅     |     ✅     |
+
+## Installation
 
 ```sh
 composer create-project cable8mm/db-to-markdown
@@ -39,23 +51,25 @@ bin/console clean
 # Clear the contents of the dist folder.
 ```
 
-## How to Develop Custom Commands
+### How to Develop Custom Commands
 
-### Step one
-
-Please fill in the database connection information in the `.env` file. You can verify it by using the composer test command.
-
-### Step two
-
-You can create a mapping class in the `src/Mappers/` folder for input and a format class in the `src/Formats` for output.
-
-### Step three
-
-Finally, you can create a command of your choice in the `src/Command` folder.
+1. Please fill in the database connection information in the `.env` file. You can verify it by using the composer test command.
+2. You can create a mapping class in the `src/Mappers/` folder for input and a format class in the `src/Formats` for output.
+3. Finally, you can create a command of your choice in the `src/Command` folder.
 
 I have already prepared the mapper, format class, and command.
 
-## Test
+### Formatting
+
+```bash
+composer lint
+# Modify all files to comply with the PSR-12.
+
+composer inspect
+# Inspect all files to ensure compliance with PSR-12.
+```
+
+### Test
 
 It uses the built-in SQLite database, not your own database. It will never cause harm to your data. You don't need to worry about that.
 
