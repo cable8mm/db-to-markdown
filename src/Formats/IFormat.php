@@ -2,7 +2,7 @@
 
 namespace Cable8mm\DbToMarkdown\Formats;
 
-interface IFormats
+interface IFormat
 {
     public function path(): string;
 

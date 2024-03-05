@@ -4,7 +4,7 @@ namespace Cable8mm\DbToMarkdown\Formats;
 
 use Carbon\Carbon;
 
-class Jekyll implements IFormats
+class Jekyll implements IFormat
 {
     public function __construct(
         private string $layout,

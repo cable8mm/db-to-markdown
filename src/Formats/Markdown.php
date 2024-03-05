@@ -4,7 +4,7 @@ namespace Cable8mm\DbToMarkdown\Formats;
 
 use Carbon\Carbon;
 
-class Markdown implements IFormats
+class Markdown implements IFormat
 {
     public function __construct(
         private Carbon $date,
