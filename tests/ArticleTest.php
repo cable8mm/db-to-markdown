@@ -16,8 +16,10 @@ final class ArticleTest extends TestCase
 
         $faker = Factory::create();
 
-        $html = '<p>\[widget id="good" \]</p>'.PHP_EOL;
+        $html = '<p>[widget id="good" ]</p>'.PHP_EOL;
+        $html = '<p>[widget type="good" good="1000014584"]</p>'.PHP_EOL;
         $html .= '<p><img src="https://www.palgle.com/image.png" /></p>'.PHP_EOL;
+        $html = '<p>[widget type=&quot;good&quot; good=&quot;1000014584&quot;]</p>'.PHP_EOL;
         $html .= '<p>only this to remain</p>';
 
         $row = [
@@ -36,7 +38,7 @@ final class ArticleTest extends TestCase
                     return preg_replace('/<img[^>]+>/', '', $item);
                 }, function ($item) {
                     // \[widget type="good" good="1000012875"\]
-                    return preg_replace('/\\\\\[[^\]]+\]\n?/', '', $item);
+                    return preg_replace('/\[[^\]]+\]\n?/u', '', $item);
                 }
             )
             ->in($row);
