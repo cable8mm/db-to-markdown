@@ -1,5 +1,13 @@
 # Release Notes
 
+## v1.3.2 - 2024-03-06
+
+### What's Changed
+
+* Add a preview section to the README by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/20
+
+**Full Changelog**: https://github.com/cable8mm/db-to-markdown/compare/v1.3.1...v1.3.2
+
 ## v1.3.1 - 2024-03-06
 
 ### What's Changed
