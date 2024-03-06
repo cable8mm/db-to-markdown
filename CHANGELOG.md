@@ -1,5 +1,16 @@
 # Release Notes
 
+## v1.3.0 - 2024-03-05
+
+### What's Changed
+
+* Address warnings for Jekyll by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/15
+* Implement category functionality by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/16
+* Resolve category lifecycle by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/17
+* Compare the original data with the output data by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/18
+
+**Full Changelog**: https://github.com/cable8mm/db-to-markdown/compare/v1.2.0...v1.3.0
+
 ## v1.2.0 - 2024-03-05
 
 ### What's Changed
