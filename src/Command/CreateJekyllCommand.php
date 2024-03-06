@@ -74,12 +74,11 @@ class CreateJekyllCommand extends Command
                         return preg_replace('/\[[^\]]+\]\n?/u', '', $item);
                     }
                 )
-                ->setAddHours(24 * 365 + 24 * 120)
                 ->resolveCategories($this->categories)
                 ->in($row);
 
             $jekyll = new Jekyll(
-                layout: 'post',
+                layout: 'single',
                 title: $article->title,
                 date: $article->publishedAt,
                 author: 'Companimal',

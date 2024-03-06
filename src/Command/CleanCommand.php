@@ -5,6 +5,7 @@ namespace Cable8mm\DbToMarkdown\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
@@ -15,6 +16,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CleanCommand extends Command
 {
+    protected function configure()
+    {
+        $this->addOption(
+            'path',
+            'p',
+            InputOption::VALUE_OPTIONAL,
+            'Please specify the path to delete all files.',
+            __DIR__.'/../../dist/'
+        );
+    }
+
     /**
      * Create Markdown files
      *
@@ -22,8 +34,8 @@ class CleanCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        array_map('unlink', array_filter((array) glob(__DIR__.'/../../dist/*.markdown')));
-        array_map('unlink', array_filter((array) glob(__DIR__.'/../../dist/*.md')));
+        array_map('unlink', array_filter((array) glob($input->getOption('path').'*.markdown')));
+        array_map('unlink', array_filter((array) glob($input->getOption('path').'*.md')));
 
         return Command::SUCCESS;
     }
