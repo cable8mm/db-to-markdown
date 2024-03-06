@@ -18,6 +18,10 @@ This tool is specialized in generating Markdown files, particularly designed for
 - [x] Implement callback body and datetime functionality
 - [x] Database testing is supported
 
+## Preview
+
+![Preview](https://cabinet.palgle.com/db-to-markdown-preview.gif)
+
 ## Support & Tested
 
 | Versions  | PHP 8.0.2 | PHP 8.1.\* | PHP 8.2.\* | PHP 8.3.\* |
