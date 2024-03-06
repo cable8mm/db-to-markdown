@@ -18,6 +18,10 @@ This tool is specialized in generating Markdown files, particularly designed for
 - [x] Implement callback body and datetime functionality
 - [x] Database testing is supported
 
+## Preview
+
+![Preview](https://github.com/cable8mm/cabinet/blob/6223a0c6d91cb2d36fdccbd13e9e92bf3c9f1427/db-to-markdown-preview.gif?raw=true)
+
 ## Support & Tested
 
 | Versions  | PHP 8.0.2 | PHP 8.1.\* | PHP 8.2.\* | PHP 8.3.\* |
