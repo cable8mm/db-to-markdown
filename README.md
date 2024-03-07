@@ -20,7 +20,7 @@ This tool is specialized in generating Markdown files, particularly designed for
 
 ## Preview
 
-![Preview](https://github.com/cable8mm/cabinet/blob/6223a0c6d91cb2d36fdccbd13e9e92bf3c9f1427/db-to-markdown-preview.gif?raw=true)
+![Preview](https://github.com/cable8mm/cabinet/blob/main/db-to-markdown-preview.gif?raw=true)
 
 ## Support & Tested
 
