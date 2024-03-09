@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.3.3 - 2024-03-09
+
+### What's Changed
+
+* Resolve how to add a GIF in the README by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/21
+* Add a deployment to GitHub Page by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/22
+
+**Full Changelog**: https://github.com/cable8mm/db-to-markdown/compare/v1.3.2...v1.3.3
+
 ## v1.3.2 - 2024-03-06
 
 ### What's Changed
