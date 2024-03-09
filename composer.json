@@ -47,12 +47,9 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
-        "test": [
-            "./vendor/bin/phpunit tests"
-        ],
-        "lint": [
-            "./vendor/bin/pint"
-        ],
-        "inspect": "./vendor/bin/pint --test"
+        "test": "./vendor/bin/phpunit tests",
+        "lint": "./vendor/bin/pint",
+        "inspect": "./vendor/bin/pint --test",
+        "apidoc": "doctum.phar update doctum.php --output-format=github -v --no-ansi --no-progress"
     }
 }
