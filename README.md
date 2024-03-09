@@ -7,9 +7,11 @@
 [![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/cable8mm/db-to-markdown/php)](https://packagist.org/packages/cable8mm/db-to-markdown)
 ![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/cable8mm/db-to-markdown/symfony%2Fconsole)
 [![Packagist Stars](https://img.shields.io/packagist/stars/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/stargazers)
-[![Packagist License](https://img.shields.io/packagist/l/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/blob/main/LICENSE.md)
+![Packagist License](https://img.shields.io/packagist/l/cable8mm/db-to-markdown)
 
 This tool is specialized in generating Markdown files, particularly designed for creating Jekyll Markdown documents from a database. You can generate your own Markdown, such as Jekyll, Astro, Gatsby, or any other format you prefer.
+
+We have provided the API Documentation on the web. For more information, please visit https://www.palgle.com/db-to-markdown/ ❤️
 
 ## Features
 
