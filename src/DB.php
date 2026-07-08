@@ -17,9 +17,11 @@ class DB
 
         $params = [];
 
-        if ($_ENV['DB_CONNECTION'] == 'mysql') {
+        $connection = $_ENV['DB_CONNECTION'] ?? 'sqlite';
+
+        if ($connection == 'mysql') {
             $params = [
-                'type' => $_ENV['DB_CONNECTION'],
+                'type' => $connection,
                 'host' => $_ENV['DB_HOST'],
                 'database' => $_ENV['DB_DATABASE'],
                 'username' => $_ENV['DB_USERNAME'],
@@ -30,7 +32,7 @@ class DB
             ];
         }
 
-        if ($_ENV['DB_CONNECTION'] == 'sqlite') {
+        if ($connection == 'sqlite') {
             $databasePath = $_ENV['DB_DATABASE'] ?? __DIR__.'/../database/database.sqlite';
 
             $params = [

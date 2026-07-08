@@ -65,6 +65,7 @@ final class ModelTest extends TestCase
     {
         $model = Model::getInstance();
 
+        $model->down();
         $model->up();
 
         $connection = $model->getConnection();
@@ -76,7 +77,7 @@ final class ModelTest extends TestCase
 
         $countAfter = $connection->count($table);
 
-        $this->assertEquals($countBefore + 1, $countAfter);
+        $this->assertEquals($countBefore + 10, $countAfter);
 
         $model->down();
     }

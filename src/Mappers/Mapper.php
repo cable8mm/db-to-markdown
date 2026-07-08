@@ -63,7 +63,13 @@ class Mapper
             throw new \InvalidArgumentException($path.' is not a valid JSON mapper file.');
         }
 
-        return $decoded['map'] ?? $decoded;
+        $map = $decoded['map'] ?? $decoded;
+
+        if (! isset($map['title'], $map['slug'], $map['categories'], $map['body'], $map['published_at'])) {
+            throw new \InvalidArgumentException($path.' must contain a "map" object with title, slug, categories, body and published_at keys.');
+        }
+
+        return $map;
     }
 
     public function getTitle(): string|array

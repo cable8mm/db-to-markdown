@@ -78,7 +78,7 @@ class Model
         return $this->connection->drop($this->table);
     }
 
-    public function factory(): ?\PDOStatement
+    public function factory(int $count = 10): void
     {
         $map = Mapper::getMap($this->currentMapper);
 
@@ -86,19 +86,21 @@ class Model
 
         $fields = $mapper->fields();
 
-        $factory = [];
+        for ($i = 0; $i < $count; $i++) {
+            $factory = [];
 
-        foreach ($fields as $item) {
-            $fake = $this->getFake($item, $mapper);
+            foreach ($fields as $item) {
+                $fake = $this->getFake($item, $mapper);
 
-            if (! $fake) {
-                continue;
+                if (! $fake) {
+                    continue;
+                }
+
+                $factory = array_merge($factory, $fake);
             }
 
-            $factory = array_merge($factory, $fake);
+            $this->connection->insert($this->table, $factory);
         }
-
-        return $this->connection->insert($this->table, $factory);
     }
 
     public function getField(string $field, Mapper $mapper): array
