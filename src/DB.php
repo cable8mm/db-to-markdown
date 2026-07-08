@@ -45,7 +45,7 @@ class DB
     private static function loadEnv(): void
     {
         $dotenv = Dotenv::createImmutable(getcwd());
-        $dotenv->load();
+        $dotenv->safeLoad();
     }
 
     public static function getInstance(): static

@@ -19,8 +19,18 @@ abstract class BaseCommand extends Command
     public function __construct()
     {
         parent::__construct();
+    }
 
-        $this->database = DB::getInstance()->getConnection();
+    /**
+     * Lazily establish the database connection right before use.
+     */
+    protected function getDatabase(): Medoo
+    {
+        if (! isset($this->database)) {
+            $this->database = DB::getInstance()->getConnection();
+        }
+
+        return $this->database;
     }
 
     /**
@@ -68,7 +78,7 @@ abstract class BaseCommand extends Command
             $map = Mapper::getMap(DB::mapper());
         } catch (\Throwable $e) {
             $output->writeln(sprintf(
-                '<error>Mapper "%s" not found. Please check DB_MAPPER in .env</error>',
+                '<error>Mapper file "%s" not found. Please run "bin/console init" first.</error>',
                 DB::mapper()
             ));
 
@@ -85,7 +95,7 @@ abstract class BaseCommand extends Command
             $where['LIMIT'] = (int) $limit;
         }
 
-        $articles = $this->database->select(DB::table(), $mapper->fields(), $where);
+        $articles = $this->getDatabase()->select(DB::table(), $mapper->fields(), $where);
 
         $outputDir = rtrim($this->getOutputDir($input), '/').'/';
 

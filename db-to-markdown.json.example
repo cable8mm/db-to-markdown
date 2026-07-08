@@ -1,0 +1,16 @@
+{
+    "table": "posts",
+    "author": "Your Name",
+    "category_labels": {
+        "1": "Category One",
+        "2": "Category Two",
+        "3": "Category Three"
+    },
+    "map": {
+        "title": ["title", "subtitle"],
+        "slug": "id",
+        "categories": "category_id",
+        "body": "content",
+        "published_at": "published_at"
+    }
+}
