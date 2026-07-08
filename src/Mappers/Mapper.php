@@ -51,8 +51,49 @@ class Mapper
         return $where;
     }
 
-    public static function getMap($filename)
+    public static function getMap($filename): array
     {
         return require __DIR__.DIRECTORY_SEPARATOR.$filename.'.php';
+    }
+
+    public function getTitle(): string|array
+    {
+        return $this->title;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function getCategories(): string
+    {
+        return $this->categories;
+    }
+
+    public function getBody(): string
+    {
+        return $this->body;
+    }
+
+    public function getPublishedAt(): string|array
+    {
+        return $this->published_at;
+    }
+
+    public function isTitleArray(): bool
+    {
+        return is_array($this->title);
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'categories' => $this->categories,
+            'body' => $this->body,
+            'published_at' => $this->published_at,
+        ];
     }
 }

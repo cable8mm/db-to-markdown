@@ -49,7 +49,7 @@ class DB
     public static function getInstance(): static
     {
         if (self::$instance === null) {
-            self::$instance = new self;
+            self::$instance = new self();
         }
 
         return self::$instance;
@@ -89,5 +89,36 @@ class DB
         }
 
         return $_ENV['DB_MAPPER'] ?? 'DogStory';
+    }
+
+    public static function author(): string
+    {
+        if (! isset($_ENV['DB_AUTHOR'])) {
+            self::loadEnv();
+        }
+
+        return $_ENV['DB_AUTHOR'] ?? 'Companimal';
+    }
+
+    public static function categories(): array
+    {
+        if (! isset($_ENV['DB_CATEGORIES'])) {
+            self::loadEnv();
+        }
+
+        if (isset($_ENV['DB_CATEGORIES'])) {
+            return json_decode($_ENV['DB_CATEGORIES'], true);
+        }
+
+        return [
+            0 => '기타',
+            '행동+심리',
+            '의료/건강',
+            '감동',
+            '입양',
+            '재미',
+            '장소',
+            '상품',
+        ];
     }
 }

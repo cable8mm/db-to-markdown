@@ -38,7 +38,7 @@ class Model
     public static function getInstance(): static
     {
         if (self::$instance === null) {
-            self::$instance = new self;
+            self::$instance = new self();
         }
 
         return self::$instance;
@@ -58,12 +58,14 @@ class Model
     {
         $map = Mapper::getMap($this->currentMapper);
 
-        $fields = (new Mapper(...$map))->fields();
+        $mapper = new Mapper(...$map);
+
+        $fields = $mapper->fields();
 
         $schema = [];
 
         foreach ($fields as $item) {
-            $schema = array_merge($schema, $this->getField($item, ...$map));
+            $schema = array_merge($schema, $this->getField($item, $mapper));
         }
 
         return $this->connection->create($this->table, $schema);
@@ -78,12 +80,14 @@ class Model
     {
         $map = Mapper::getMap($this->currentMapper);
 
-        $fields = (new Mapper(...$map))->fields();
+        $mapper = new Mapper(...$map);
+
+        $fields = $mapper->fields();
 
         $factory = [];
 
         foreach ($fields as $item) {
-            $fake = $this->getFake($item, ...$map);
+            $fake = $this->getFake($item, $mapper);
 
             if (! $fake) {
                 continue;
@@ -95,7 +99,7 @@ class Model
         return $this->connection->insert($this->table, $factory);
     }
 
-    public function getField(string $field, array|string $title, string $slug, string $categories, string $body, string $published_at): array
+    public function getField(string $field, Mapper $mapper): array
     {
         if ($field === 'id') {
             return ['id' => [
@@ -106,6 +110,12 @@ class Model
         }
 
         $description = [];
+
+        $title = $mapper->getTitle();
+        $slug = $mapper->getSlug();
+        $categories = $mapper->getCategories();
+        $body = $mapper->getBody();
+        $publishedAt = $mapper->getPublishedAt();
 
         if (is_string($title) || (is_array($title) && in_array($field, $title))) {
             $description = [
@@ -131,7 +141,7 @@ class Model
             ];
         }
 
-        if ($field === $published_at) {
+        if ($field === $publishedAt) {
             $description = [
                 'DATETIME',
             ];
@@ -144,13 +154,17 @@ class Model
         return [$field => $description];
     }
 
-    public function getFake(string $field, array|string $title, string $slug, string $categories, string $body, string $published_at): array|bool
+    public function getFake(string $field, Mapper $mapper): array|bool
     {
         if ($field === 'id') {
             return false;
         }
 
-        $description = [];
+        $title = $mapper->getTitle();
+        $slug = $mapper->getSlug();
+        $categories = $mapper->getCategories();
+        $body = $mapper->getBody();
+        $publishedAt = $mapper->getPublishedAt();
 
         if (is_string($title) || (is_array($title) && in_array($field, $title))) {
             $fake = $this->faker->sentence();
@@ -168,7 +182,7 @@ class Model
             $fake = $this->faker->text();
         }
 
-        if ($field === $published_at) {
+        if ($field === $publishedAt) {
             $fake = $this->faker->dateTime()->format('Y-m-d H:i:s');
         }
 
