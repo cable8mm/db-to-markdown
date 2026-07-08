@@ -11,7 +11,7 @@
 
 This tool generates Markdown files from a database table. It supports multiple output formats including Jekyll, Astro, Gatsby, or any custom format you create.
 
-We have provided the API Documentation on the web. For more information, please visit https://www.palgle.com/db-to-markdown/ ❤️
+We have provided the API Documentation on the web. For more information, please visit <https://www.palgle.com/db-to-markdown/> ❤️
 
 ## Features
 
@@ -26,9 +26,9 @@ We have provided the API Documentation on the web. For more information, please 
 
 ## Support & Tested
 
-| Versions  | PHP 8.0.2 | PHP 8.1.\* | PHP 8.2.\* | PHP 8.3.\* |
-| :-------: | :-------: | :--------: | :--------: | :--------: |
-| Available |    ✅     |     ✅     |     ✅     |     ✅     |
+| Versions  | PHP 8.2 | PHP 8.3 | PHP 8.4 | PHP 8.5 |
+| :-------: | :-----: | :-----: | :-----: | :-----: |
+| Available |   ✅    |   ✅    |   ✅    |   ✅    |
 
 ## Installation
 
