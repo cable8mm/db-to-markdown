@@ -69,4 +69,68 @@ final class MapperTest extends TestCase
 
         $this->assertEquals(['single_title', 'slug_field', 'cat_field', 'body_field', 'date_field'], $fields);
     }
+
+    public function test_getters_return_expected_values(): void
+    {
+        $mapper = new Mapper(
+            title: ['title1', 'title2'],
+            slug: 'slug_field',
+            categories: 'cat_field',
+            body: 'body_field',
+            published_at: 'date_field'
+        );
+
+        $this->assertEquals(['title1', 'title2'], $mapper->getTitle());
+        $this->assertEquals('slug_field', $mapper->getSlug());
+        $this->assertEquals('cat_field', $mapper->getCategories());
+        $this->assertEquals('body_field', $mapper->getBody());
+        $this->assertEquals('date_field', $mapper->getPublishedAt());
+    }
+
+    public function test_is_title_array_returns_true_for_array(): void
+    {
+        $mapper = new Mapper(
+            title: ['title1', 'title2'],
+            slug: 'slug',
+            categories: 'cat',
+            body: 'body',
+            published_at: 'date'
+        );
+
+        $this->assertTrue($mapper->isTitleArray());
+    }
+
+    public function test_is_title_array_returns_false_for_string(): void
+    {
+        $mapper = new Mapper(
+            title: 'single_title',
+            slug: 'slug',
+            categories: 'cat',
+            body: 'body',
+            published_at: 'date'
+        );
+
+        $this->assertFalse($mapper->isTitleArray());
+    }
+
+    public function test_to_array_returns_all_fields(): void
+    {
+        $mapper = new Mapper(
+            title: 'single_title',
+            slug: 'slug_field',
+            categories: 'cat_field',
+            body: 'body_field',
+            published_at: 'date_field'
+        );
+
+        $array = $mapper->toArray();
+
+        $this->assertEquals([
+            'title' => 'single_title',
+            'slug' => 'slug_field',
+            'categories' => 'cat_field',
+            'body' => 'body_field',
+            'published_at' => 'date_field',
+        ], $array);
+    }
 }

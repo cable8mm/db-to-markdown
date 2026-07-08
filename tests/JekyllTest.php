@@ -131,4 +131,18 @@ final class JekyllTest extends TestCase
 
         $this->assertEquals('2024-06-15-slug.md', $path);
     }
+
+    public function test_it_returns_default_extension(): void
+    {
+        $jekyll = new Jekyll(
+            layout: 'single',
+            title: 'Title',
+            date: new Carbon('2024-06-15'),
+            author: 'Author',
+            body: 'Body',
+            slug: 'slug'
+        );
+
+        $this->assertEquals('markdown', $jekyll->getExtension());
+    }
 }

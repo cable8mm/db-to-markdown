@@ -65,4 +65,15 @@ final class MarkdownTest extends TestCase
 
         $this->assertEquals('2024-01-15-hello-world-test-slug.md', $path);
     }
+
+    public function test_it_returns_default_extension(): void
+    {
+        $markdown = new Markdown(
+            date: new Carbon('2024-01-15'),
+            body: 'Content',
+            slug: 'slug'
+        );
+
+        $this->assertEquals('md', $markdown->getExtension());
+    }
 }

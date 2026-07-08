@@ -35,6 +35,21 @@ final class DBTest extends TestCase
         $this->assertEquals('DogStory', $mapper);
     }
 
+    public function test_can_get_author_from_env(): void
+    {
+        $author = DB::author();
+
+        $this->assertIsString($author);
+    }
+
+    public function test_can_get_categories_from_env(): void
+    {
+        $categories = DB::categories();
+
+        $this->assertIsArray($categories);
+        $this->assertArrayHasKey(0, $categories);
+    }
+
     public function test_can_set_custom_instance(): void
     {
         $original = DB::getInstance();
