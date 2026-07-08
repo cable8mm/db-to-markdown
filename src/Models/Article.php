@@ -2,8 +2,8 @@
 
 namespace Cable8mm\DbToMarkdown\Models;
 
+use Cable8mm\DbToMarkdown\Mappers\Mapper;
 use Carbon\Carbon;
-use InvalidArgumentException;
 use League\HTMLToMarkdown\HtmlConverter;
 
 class Article
@@ -15,17 +15,19 @@ class Article
 
     public ?string $categories = null;
 
-    private $resolveCategories;
+    /** @var array<int|string, string>|null */
+    private ?array $resolveCategories = null;
 
     public string $body;
 
-    private $bodyCallbacks;
+    /** @var array<callable>|null */
+    private ?array $bodyCallbacks = null;
 
     public Carbon $publishedAt;
 
     private ?int $addHours = null;
 
-    private array $map;
+    private Mapper $mapper;
 
     private HtmlConverter $converter;
 
@@ -38,53 +40,56 @@ class Article
 
     public function __construct()
     {
-        $this->converter = new HtmlConverter();
+        $this->converter = new HtmlConverter;
     }
 
     private function title(): void
     {
-        if (is_string($this->map['title'])) {
-            $this->title = $this->row[$this->map['title']];
+        $titleField = $this->mapper->getTitle();
+
+        if (is_string($titleField)) {
+            $this->title = $this->row[$titleField];
 
             return;
         }
 
         $title = '';
 
-        foreach ($this->map['title'] as $item) {
+        foreach ($titleField as $item) {
             $title .= $this->row[$item].' ';
         }
 
         $title = preg_replace('/\s+$/', '', $title);
 
-        $this->title = preg_replace('/"/', '\"', $title);
+        $this->title = str_replace('"', '', $title);
     }
 
     private function slug(): void
     {
-        $this->slug = preg_replace('/[_ ]/', '-', $this->row[$this->map['slug']]);
+        $this->slug = preg_replace('/[_ ]/', '-', $this->row[$this->mapper->getSlug()]);
     }
 
     private function categories(): void
     {
-        $this->categories = $this->row[$this->map['categories']];
+        $this->categories = $this->row[$this->mapper->getCategories()];
 
         if (! is_null($this->resolveCategories)) {
+            // If resolveCategories is set, map the category value
             if (is_null($this->categories)) {
-                throw new InvalidArgumentException($this->slug.' slug\'s category must exist.');
+                // Null category when using resolveCategories: keep as null (no mapping)
+                return;
             }
 
-            if (! in_array($this->categories, array_keys($this->resolveCategories))) {
-                throw new InvalidArgumentException($this->categories.' is an invalid category. Categories must include one of '.implode(',', array_keys($this->resolveCategories)));
+            if (array_key_exists($this->categories, $this->resolveCategories)) {
+                $this->categories = $this->resolveCategories[$this->categories];
             }
-
-            $this->categories = $this->resolveCategories[$this->categories];
+            // If category not in the map, keep original value
         }
     }
 
     private function body(): void
     {
-        $body = $this->row[$this->map['body']];
+        $body = $this->row[$this->mapper->getBody()];
 
         if (! is_null($this->bodyCallbacks)) {
             foreach ($this->bodyCallbacks as $callback) {
@@ -101,7 +106,9 @@ class Article
             return $this->publishedAt;
         }
 
-        $publishedAt = new Carbon($this->row[$this->map['published_at']]);
+        $publishedAtField = $this->mapper->getPublishedAt();
+
+        $publishedAt = new Carbon($this->row[is_string($publishedAtField) ? $publishedAtField : $publishedAtField[0]]);
 
         if (! is_null($this->addHours)) {
             $publishedAt = $publishedAt->addHours($this->addHours);
@@ -162,9 +169,13 @@ class Article
 
     public static function make($map): static
     {
-        $article = new static();
+        $article = new static;
 
-        $article->map = $map;
+        if (is_array($map)) {
+            $article->mapper = new Mapper(...$map);
+        } elseif ($map instanceof Mapper) {
+            $article->mapper = $map;
+        }
 
         return $article;
     }

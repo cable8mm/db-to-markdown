@@ -9,7 +9,7 @@
 [![Packagist Stars](https://img.shields.io/packagist/stars/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/stargazers)
 ![Packagist License](https://img.shields.io/packagist/l/cable8mm/db-to-markdown)
 
-This tool is specialized in generating Markdown files, particularly designed for creating Jekyll Markdown documents from a database. You can generate your own Markdown, such as Jekyll, Astro, Gatsby, or any other format you prefer.
+This tool generates Markdown files from a database table. It supports multiple output formats including Jekyll, Astro, Gatsby, or any custom format you create.
 
 We have provided the API Documentation on the web. For more information, please visit https://www.palgle.com/db-to-markdown/ ❤️
 
@@ -36,37 +36,127 @@ We have provided the API Documentation on the web. For more information, please 
 composer create-project cable8mm/db-to-markdown
 ```
 
+After installation, run the `init` command to create the required configuration files:
+
+```sh
+php bin/console init
+# Creates .env and db-to-markdown.json from their example templates
+```
+
+## Configuration
+
+### 1. Database Connection (`.env`)
+
+Copy `.env.example` to `.env` and configure your database connection:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_DATABASE=your_database
+DB_USERNAME=root
+DB_PASSWORD=password
+DB_PORT=3306
+```
+
+If `.env` is not provided, SQLite is used by default with `database/database.sqlite`. You can customize the SQLite path by setting `DB_DATABASE` in your `.env` file. To skip database configuration entirely, leave `.env` out and use `php bin/console seeding` to seed the built-in SQLite database.
+
+### 2. Table Mapping (`db-to-markdown.json`)
+
+Configure your table structure and field mapping in `db-to-markdown.json`:
+
+```json
+{
+  "table": "posts",
+  "author": "Your Name",
+  "category_labels": {
+    "1": "Category One",
+    "2": "Category Two"
+  },
+  "map": {
+    "title": ["title", "subtitle"],
+    "slug": "id",
+    "categories": "category_id",
+    "body": "content",
+    "published_at": "published_at"
+  }
+}
+```
+
+**Field Descriptions:**
+
+- `table`: Your database table name
+- `author`: Default author name (used if author field is empty)
+- `category_labels`: Maps category IDs to display names (optional)
+- `map.title`: Column(s) for the article title (string or array)
+- `map.slug`: Column for the URL slug
+- `map.categories`: Column for category mapping
+- `map.body`: Column containing HTML content (converted to Markdown)
+- `map.published_at`: Published date column
+
 ## Usage
 
-Configure `.env` to connect to your own database. If `.env` configuration is not provided, SQLite connection is established.
+### Quick Start (SQLite Demo)
 
 ```sh
-bin/console seeding
-# If `.env` configuration is not provided, seeding must be performed.
+# Initialize configuration files
+php bin/console init
+
+# Seed demo data into the built-in SQLite database
+php bin/console seeding
+
+# Generate Markdown files
+php bin/console create-md
+# or for Jekyll format:
+php bin/console create-jekyll
 ```
 
-Database connection is established,
+### Available Commands
 
 ```sh
-bin/console create-md
-# Convert the database to markdown files in the dist folder.
+# Generate standard Markdown files in dist/
+php bin/console create-md
 
-bin/console create-jekyll
-# Convert the database to markdown files suitable for Jekyll in the dist folder.
+# Generate Jekyll-compatible Markdown with YAML front matter
+php bin/console create-jekyll
 
-bin/console clean
-# Clear the contents of the dist folder.
+# Clear all generated files in dist/
+php bin/console clean
+
+# Initialize configuration files from examples
+php bin/console init
+
+# Seed demo data for testing
+php bin/console seeding
 ```
 
-### How to Develop Custom Commands
+### Command Options
 
-1. Please fill in the database connection information in the `.env` file. You can verify it by using the composer test command.
-2. You can create a mapping class in the `src/Mappers/` folder for input and a format class in the `src/Formats` for output.
-3. Finally, you can create a command of your choice in the `src/Command` folder.
+```sh
+php bin/console create-md --dry-run
+# Shows how many files would be generated without writing them
 
-I have already prepared the mapper, format class, and command.
+php bin/console create-md --limit=5
+# Process only 5 records
 
-### Formatting
+php bin/console create-md --limit=10 --offset=20
+# Process 10 records starting from offset 20
+```
+
+## How to Develop Custom Commands
+
+1. **Run init** to create configuration files, or create them manually:
+   - `.env` for database credentials
+   - `db-to-markdown.json` for table/field mapping
+
+2. **Create a mapper** in `src/Mappers/` to define your table field mapping (see existing examples).
+
+3. **Create a format** in `src/Formats/` to define how output files are rendered (Markdown, Jekyll, etc.).
+
+4. **Create a command** in `src/Command/` extending `BaseCommand` or implementing your own logic.
+
+5. **Register your command** in `bin/console`.
+
+## Formatting
 
 ```bash
 composer lint
@@ -76,9 +166,9 @@ composer inspect
 # Inspect all files to ensure compliance with PSR-12.
 ```
 
-### Test
+## Test
 
-It uses the built-in SQLite database, not your own database. It will never cause harm to your data. You don't need to worry about that.
+It uses the built-in SQLite database, not your own database. It will never cause harm to your data.
 
 ```sh
 composer test

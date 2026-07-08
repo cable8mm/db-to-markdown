@@ -45,7 +45,8 @@
     "prefer-stable": true,
     "scripts": {
         "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php -r \"file_exists('db-to-markdown.json') || copy('db-to-markdown.json.example', 'db-to-markdown.json');\""
         ],
         "test": "./vendor/bin/phpunit tests",
         "lint": "./vendor/bin/pint",

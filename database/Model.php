@@ -19,14 +19,20 @@ class Model
 
     private Generator $faker;
 
+    private string $currentMapper;
+
     private function __construct()
     {
+        $databasePath = defined('DB_TEST_DATABASE') ? DB_TEST_DATABASE : (__DIR__.'/../database/database.sqlite');
+
         $this->connection = new Medoo([
             'type' => 'sqlite',
-            'database' => __DIR__.'/../database/database.sqlite',
+            'database' => $databasePath,
         ]);
 
         $this->table = DB::table();
+
+        $this->currentMapper = DB::mapper();
 
         $this->faker = Factory::create();
     }
@@ -34,7 +40,7 @@ class Model
     public static function getInstance(): static
     {
         if (self::$instance === null) {
-            self::$instance = new self();
+            self::$instance = new self;
         }
 
         return self::$instance;
@@ -52,14 +58,16 @@ class Model
 
     public function up(): ?\PDOStatement
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->currentMapper);
 
-        $fields = (new Mapper(...$map))->fields();
+        $mapper = new Mapper(...$map);
+
+        $fields = $mapper->fields();
 
         $schema = [];
 
         foreach ($fields as $item) {
-            $schema = array_merge($schema, $this->getField($item, ...$map));
+            $schema = array_merge($schema, $this->getField($item, $mapper));
         }
 
         return $this->connection->create($this->table, $schema);
@@ -70,28 +78,32 @@ class Model
         return $this->connection->drop($this->table);
     }
 
-    public function factory(): ?\PDOStatement
+    public function factory(int $count = 10): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->currentMapper);
 
-        $fields = (new Mapper(...$map))->fields();
+        $mapper = new Mapper(...$map);
 
-        $factory = [];
+        $fields = $mapper->fields();
 
-        foreach ($fields as $item) {
-            $fake = $this->getFake($item, ...$map);
+        for ($i = 0; $i < $count; $i++) {
+            $factory = [];
 
-            if (! $fake) {
-                continue;
+            foreach ($fields as $item) {
+                $fake = $this->getFake($item, $mapper);
+
+                if (! $fake) {
+                    continue;
+                }
+
+                $factory = array_merge($factory, $fake);
             }
 
-            $factory = array_merge($factory, $fake);
+            $this->connection->insert($this->table, $factory);
         }
-
-        return $this->connection->insert($this->table, $factory);
     }
 
-    public function getField(string $field, array|string $title, string $slug, string $categories, string $body, string $published_at): array
+    public function getField(string $field, Mapper $mapper): array
     {
         if ($field === 'id') {
             return ['id' => [
@@ -102,6 +114,12 @@ class Model
         }
 
         $description = [];
+
+        $title = $mapper->getTitle();
+        $slug = $mapper->getSlug();
+        $categories = $mapper->getCategories();
+        $body = $mapper->getBody();
+        $publishedAt = $mapper->getPublishedAt();
 
         if (is_string($title) || (is_array($title) && in_array($field, $title))) {
             $description = [
@@ -127,7 +145,7 @@ class Model
             ];
         }
 
-        if ($field === $published_at) {
+        if ($field === $publishedAt) {
             $description = [
                 'DATETIME',
             ];
@@ -140,13 +158,17 @@ class Model
         return [$field => $description];
     }
 
-    public function getFake(string $field, array|string $title, string $slug, string $categories, string $body, string $published_at): array|bool
+    public function getFake(string $field, Mapper $mapper): array|bool
     {
         if ($field === 'id') {
             return false;
         }
 
-        $description = [];
+        $title = $mapper->getTitle();
+        $slug = $mapper->getSlug();
+        $categories = $mapper->getCategories();
+        $body = $mapper->getBody();
+        $publishedAt = $mapper->getPublishedAt();
 
         if (is_string($title) || (is_array($title) && in_array($field, $title))) {
             $fake = $this->faker->sentence();
@@ -164,7 +186,7 @@ class Model
             $fake = $this->faker->text();
         }
 
-        if ($field === $published_at) {
+        if ($field === $publishedAt) {
             $fake = $this->faker->dateTime()->format('Y-m-d H:i:s');
         }
 

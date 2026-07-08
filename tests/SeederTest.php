@@ -14,6 +14,7 @@ final class SeederTest extends TestCase
     {
         $this->model = Model::getInstance();
 
+        $this->model->down();
         $this->model->up();
     }
 
@@ -30,10 +31,27 @@ final class SeederTest extends TestCase
 
         $count = $connection->count($table);
 
-        (new Seeder())->run();
+        (new Seeder)->run();
 
         $nextCount = $connection->count($table);
 
-        $this->assertEquals($count + 1, $nextCount);
+        $this->assertEquals($count + 10, $nextCount);
+    }
+
+    public function test_can_multiple_seeds(): void
+    {
+        $connection = $this->model->getConnection();
+
+        $table = $this->model->getTable();
+
+        $seeder = new Seeder;
+
+        $seeder->run();
+        $seeder->run();
+        $seeder->run();
+
+        $count = $connection->count($table);
+
+        $this->assertEquals(30, $count);
     }
 }

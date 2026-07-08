@@ -14,31 +14,36 @@ class Jekyll implements IFormat
         private string $body,
         private string $slug,
         private ?string $categories = null
-    ) {
+    ) {}
 
+    public function getExtension(): string
+    {
+        return 'markdown';
     }
 
-    public function path(string $extention = 'markdown'): string
+    public function path(?string $extension = null): string
     {
+        $ext = $extension ?? $this->getExtension();
+
         $prefix = $this->date->format('Y-m-d');
 
         $filename = preg_replace('/[_ ]/', '-', $this->slug);
 
-        return $prefix.'-'.$filename.'.'.$extention;
+        return $prefix.'-'.$filename.'.'.$ext;
     }
 
     public function render(): string
     {
         $out = '---'.PHP_EOL;
-        $out .= 'layout : '.$this->layout.PHP_EOL;
-        $out .= 'title : "'.$this->title.'"'.PHP_EOL;
-        $out .= 'date : '.$this->date->format('Y-m-d h:i:s').PHP_EOL;
+        $out .= 'layout: '.$this->layout.PHP_EOL;
+        $out .= 'title: "'.$this->title.'"'.PHP_EOL;
+        $out .= 'date: '.$this->date->format('Y-m-d H:i:s').PHP_EOL;
 
         if (! is_null($this->categories)) {
-            $out .= 'categories : '.$this->categories.PHP_EOL;
+            $out .= 'categories: '.$this->categories.PHP_EOL;
         }
 
-        $out .= 'author : '.$this->author.PHP_EOL;
+        $out .= 'author: '.$this->author.PHP_EOL;
         $out .= '---'.PHP_EOL;
 
         $out .= $this->body;

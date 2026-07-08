@@ -10,6 +10,10 @@
         </testsuite>
     </testsuites>
 
+    <php>
+        <const name="DB_TEST_DATABASE" value="/tmp/db-to-markdown-test.sqlite" />
+    </php>
+
     <source>
         <include>
             <directory>src</directory>

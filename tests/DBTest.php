@@ -20,10 +20,40 @@ final class DBTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_can_get_table_from_env(): void
+    public function test_can_get_mapper_path(): void
     {
-        $table = DB::table();
+        $mapper = DB::mapper();
 
-        $this->assertIsString($table);
+        $this->assertIsString($mapper);
+        $this->assertStringEndsWith('db-to-markdown.json', $mapper);
+    }
+
+    public function test_can_get_categories_returns_array(): void
+    {
+        $categories = DB::categories();
+
+        $this->assertIsArray($categories);
+        $this->assertNotEmpty($categories);
+    }
+
+    public function test_can_set_custom_instance(): void
+    {
+        $original = DB::getInstance();
+
+        DB::setInstance(null);
+
+        $newInstance = DB::getInstance();
+
+        $this->assertNotNull($newInstance);
+
+        DB::setInstance($original);
+    }
+
+    public function test_get_instance_returns_same_instance(): void
+    {
+        $instance1 = DB::getInstance();
+        $instance2 = DB::getInstance();
+
+        $this->assertSame($instance1, $instance2);
     }
 }

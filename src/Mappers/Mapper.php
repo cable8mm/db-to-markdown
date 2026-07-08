@@ -51,8 +51,70 @@ class Mapper
         return $where;
     }
 
-    public static function getMap($filename)
+    public static function getMap(string $path): array
     {
-        return require __DIR__.DIRECTORY_SEPARATOR.$filename.'.php';
+        if (! is_file($path)) {
+            throw new \InvalidArgumentException($path.' not found. Run "bin/console init" to create it from db-to-markdown.json.example.');
+        }
+
+        if (pathinfo($path, PATHINFO_EXTENSION) !== 'json') {
+            throw new \InvalidArgumentException($path.' must be a JSON file.');
+        }
+
+        $decoded = json_decode((string) file_get_contents($path), true);
+
+        if (! is_array($decoded)) {
+            $error = json_last_error_msg();
+            throw new \InvalidArgumentException(sprintf('%s contains invalid JSON: %s. Run "bin/console init" to create a valid config.', $path, $error));
+        }
+
+        $map = $decoded['map'] ?? $decoded;
+
+        if (! isset($map['title'], $map['slug'], $map['categories'], $map['body'], $map['published_at'])) {
+            throw new \InvalidArgumentException(sprintf('%s is missing required map fields. Expected: title, slug, categories, body, published_at. Run "bin/console init" to see a valid example.', $path));
+        }
+
+        return $map;
+    }
+
+    public function getTitle(): string|array
+    {
+        return $this->title;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function getCategories(): string
+    {
+        return $this->categories;
+    }
+
+    public function getBody(): string
+    {
+        return $this->body;
+    }
+
+    public function getPublishedAt(): string|array
+    {
+        return $this->published_at;
+    }
+
+    public function isTitleArray(): bool
+    {
+        return is_array($this->title);
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'categories' => $this->categories,
+            'body' => $this->body,
+            'published_at' => $this->published_at,
+        ];
     }
 }

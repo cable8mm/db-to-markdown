@@ -17,9 +17,11 @@ class DB
 
         $params = [];
 
-        if ($_ENV['DB_CONNECTION'] == 'mysql') {
+        $connection = $_ENV['DB_CONNECTION'] ?? 'sqlite';
+
+        if ($connection == 'mysql') {
             $params = [
-                'type' => $_ENV['DB_CONNECTION'],
+                'type' => $connection,
                 'host' => $_ENV['DB_HOST'],
                 'database' => $_ENV['DB_DATABASE'],
                 'username' => $_ENV['DB_USERNAME'],
@@ -30,10 +32,12 @@ class DB
             ];
         }
 
-        if ($_ENV['DB_CONNECTION'] == 'sqlite') {
+        if ($connection == 'sqlite') {
+            $databasePath = $_ENV['DB_DATABASE'] ?: __DIR__.'/../database/database.sqlite';
+
             $params = [
                 'type' => 'sqlite',
-                'database' => __DIR__.'/../database/database.sqlite',
+                'database' => $databasePath,
             ];
         }
 
@@ -43,16 +47,24 @@ class DB
     private static function loadEnv(): void
     {
         $dotenv = Dotenv::createImmutable(getcwd());
-        $dotenv->load();
+        $dotenv->safeLoad();
     }
 
     public static function getInstance(): static
     {
         if (self::$instance === null) {
-            self::$instance = new self();
+            self::$instance = new self;
         }
 
         return self::$instance;
+    }
+
+    /**
+     * Set a custom instance (useful for testing / DI).
+     */
+    public static function setInstance(?self $instance): void
+    {
+        self::$instance = $instance;
     }
 
     public function isConnected(): bool
@@ -67,10 +79,58 @@ class DB
 
     public static function table(): string
     {
-        if (! isset($_ENV['DB_TABLE'])) {
-            self::loadEnv();
+        return self::config()['table'] ?? 'posts';
+    }
+
+    public static function mapper(): string
+    {
+        return getcwd().DIRECTORY_SEPARATOR.'db-to-markdown.json';
+    }
+
+    public static function author(): string
+    {
+        return self::config()['author'] ?? 'Companimal';
+    }
+
+    public static function categories(): array
+    {
+        if (isset(self::config()['category_labels'])) {
+            return self::config()['category_labels'];
         }
 
-        return $_ENV['DB_TABLE'];
+        return [
+            0 => '기타',
+            '행동+심리',
+            '의료/건강',
+            '감동',
+            '입양',
+            '재미',
+            '장소',
+            '상품',
+        ];
+    }
+
+    /**
+     * Load the project-wide db-to-markdown.json configuration (cached).
+     *
+     * @return array<string, mixed>
+     */
+    private static function config(): array
+    {
+        static $config = null;
+
+        if ($config === null) {
+            $path = self::mapper();
+
+            if (is_file($path)) {
+                $decoded = json_decode((string) file_get_contents($path), true);
+
+                $config = is_array($decoded) ? $decoded : [];
+            } else {
+                $config = [];
+            }
+        }
+
+        return $config;
     }
 }
