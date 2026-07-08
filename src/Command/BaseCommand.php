@@ -77,10 +77,7 @@ abstract class BaseCommand extends Command
         try {
             $map = Mapper::getMap(DB::mapper());
         } catch (\Throwable $e) {
-            $output->writeln(sprintf(
-                '<error>Mapper file "%s" not found. Please run "bin/console init" first.</error>',
-                DB::mapper()
-            ));
+            $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
 
             return Command::FAILURE;
         }

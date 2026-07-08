@@ -53,20 +53,25 @@ class Mapper
 
     public static function getMap(string $path): array
     {
-        if (! is_file($path) || pathinfo($path, PATHINFO_EXTENSION) !== 'json') {
-            throw new \InvalidArgumentException($path.' is not a valid JSON mapper file.');
+        if (! is_file($path)) {
+            throw new \InvalidArgumentException($path.' not found. Run "bin/console init" to create it from db-to-markdown.json.example.');
+        }
+
+        if (pathinfo($path, PATHINFO_EXTENSION) !== 'json') {
+            throw new \InvalidArgumentException($path.' must be a JSON file.');
         }
 
         $decoded = json_decode((string) file_get_contents($path), true);
 
         if (! is_array($decoded)) {
-            throw new \InvalidArgumentException($path.' is not a valid JSON mapper file.');
+            $error = json_last_error_msg();
+            throw new \InvalidArgumentException(sprintf('%s contains invalid JSON: %s. Run "bin/console init" to create a valid config.', $path, $error));
         }
 
         $map = $decoded['map'] ?? $decoded;
 
         if (! isset($map['title'], $map['slug'], $map['categories'], $map['body'], $map['published_at'])) {
-            throw new \InvalidArgumentException($path.' must contain a "map" object with title, slug, categories, body and published_at keys.');
+            throw new \InvalidArgumentException(sprintf('%s is missing required map fields. Expected: title, slug, categories, body, published_at. Run "bin/console init" to see a valid example.', $path));
         }
 
         return $map;

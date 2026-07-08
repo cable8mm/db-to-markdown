@@ -150,4 +150,42 @@ final class MapperTest extends TestCase
             'published_at' => 'date_field',
         ], $array);
     }
+
+    public function test_get_map_throws_for_missing_file(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('bin/console init');
+
+        Mapper::getMap('/nonexistent/path/file.json');
+    }
+
+    public function test_get_map_throws_for_invalid_json(): void
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'mapper_test').'.json';
+        file_put_contents($tempFile, 'not valid json {');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('bin/console init');
+
+        try {
+            Mapper::getMap($tempFile);
+        } finally {
+            unlink($tempFile);
+        }
+    }
+
+    public function test_get_map_throws_for_missing_required_fields(): void
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'mapper_test').'.json';
+        file_put_contents($tempFile, json_encode(['map' => ['title' => 't']]));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('missing required map fields');
+
+        try {
+            Mapper::getMap($tempFile);
+        } finally {
+            unlink($tempFile);
+        }
+    }
 }
