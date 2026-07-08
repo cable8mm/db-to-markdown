@@ -27,12 +27,12 @@ final class DBTest extends TestCase
         $this->assertIsString($table);
     }
 
-    public function test_can_get_mapper_from_env(): void
+    public function test_can_get_mapper_path(): void
     {
         $mapper = DB::mapper();
 
         $this->assertIsString($mapper);
-        $this->assertEquals('DogStory', $mapper);
+        $this->assertStringEndsWith('db-to-markdown.json', $mapper);
     }
 
     public function test_can_get_author_from_env(): void

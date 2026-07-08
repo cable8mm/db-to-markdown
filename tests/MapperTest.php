@@ -19,6 +19,20 @@ final class MapperTest extends TestCase
         $this->assertArrayHasKey('published_at', $map);
     }
 
+    public function test_can_get_map_from_json_file(): void
+    {
+        $path = getcwd().'/db-to-markdown.json';
+
+        $map = Mapper::getMap($path);
+
+        $this->assertIsArray($map);
+        $this->assertArrayHasKey('title', $map);
+        $this->assertArrayHasKey('slug', $map);
+        $this->assertArrayHasKey('categories', $map);
+        $this->assertArrayHasKey('body', $map);
+        $this->assertArrayHasKey('published_at', $map);
+    }
+
     public function test_can_get_flatten_fields_from_mapper(): void
     {
         $map = Mapper::getMap('DogStory');

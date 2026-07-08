@@ -53,7 +53,23 @@ class Mapper
 
     public static function getMap($filename): array
     {
-        return require __DIR__.DIRECTORY_SEPARATOR.$filename.'.php';
+        $path = $filename;
+
+        if (! is_file($path)) {
+            $path = __DIR__.DIRECTORY_SEPARATOR.$filename.'.php';
+        }
+
+        if (is_file($path) && pathinfo($path, PATHINFO_EXTENSION) === 'json') {
+            $decoded = json_decode((string) file_get_contents($path), true);
+
+            if (! is_array($decoded)) {
+                throw new \InvalidArgumentException($path.' is not a valid JSON mapper file.');
+            }
+
+            return $decoded;
+        }
+
+        return require $path;
     }
 
     public function getTitle(): string|array

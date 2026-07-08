@@ -86,11 +86,7 @@ class DB
 
     public static function mapper(): string
     {
-        if (! isset($_ENV['DB_MAPPER'])) {
-            self::loadEnv();
-        }
-
-        return $_ENV['DB_MAPPER'] ?? 'DogStory';
+        return getcwd().DIRECTORY_SEPARATOR.'db-to-markdown.json';
     }
 
     public static function author(): string
