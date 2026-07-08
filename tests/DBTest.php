@@ -26,4 +26,33 @@ final class DBTest extends TestCase
 
         $this->assertIsString($table);
     }
+
+    public function test_can_get_mapper_from_env(): void
+    {
+        $mapper = DB::mapper();
+
+        $this->assertIsString($mapper);
+        $this->assertEquals('DogStory', $mapper);
+    }
+
+    public function test_can_set_custom_instance(): void
+    {
+        $original = DB::getInstance();
+
+        DB::setInstance(null);
+
+        $newInstance = DB::getInstance();
+
+        $this->assertNotNull($newInstance);
+
+        DB::setInstance($original);
+    }
+
+    public function test_get_instance_returns_same_instance(): void
+    {
+        $instance1 = DB::getInstance();
+        $instance2 = DB::getInstance();
+
+        $this->assertSame($instance1, $instance2);
+    }
 }

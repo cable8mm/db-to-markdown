@@ -36,4 +36,21 @@ final class SeederTest extends TestCase
 
         $this->assertEquals($count + 1, $nextCount);
     }
+
+    public function test_can_multiple_seeds(): void
+    {
+        $connection = $this->model->getConnection();
+
+        $table = $this->model->getTable();
+
+        $seeder = new Seeder();
+
+        $seeder->run();
+        $seeder->run();
+        $seeder->run();
+
+        $count = $connection->count($table);
+
+        $this->assertEquals(3, $count);
+    }
 }
