@@ -11,9 +11,14 @@ use PHPUnit\Framework\TestCase;
 
 final class ArticleTest extends TestCase
 {
+    private function jsonPath(): string
+    {
+        return getcwd().'/db-to-markdown.json';
+    }
+
     public function test_callbacks_to_work_collectly(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $faker = Factory::create();
 
@@ -60,7 +65,7 @@ final class ArticleTest extends TestCase
 
     public function test_title_is_string_when_map_title_is_string(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $row = [
             'cover_title' => 'Single Title',
@@ -103,7 +108,7 @@ final class ArticleTest extends TestCase
 
     public function test_slug_replaces_underscores_and_spaces(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $row = [
             'cover_title' => 'Title',
@@ -147,7 +152,7 @@ final class ArticleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $row = [
             'cover_title' => 'Title',
@@ -168,7 +173,7 @@ final class ArticleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $row = [
             'cover_title' => 'Title',
@@ -187,7 +192,7 @@ final class ArticleTest extends TestCase
 
     public function test_resolve_categories_maps_correctly(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $row = [
             'cover_title' => 'Title',
@@ -208,7 +213,7 @@ final class ArticleTest extends TestCase
 
     public function test_published_at_returns_carbon_instance(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $row = [
             'cover_title' => 'Title',
@@ -228,7 +233,7 @@ final class ArticleTest extends TestCase
 
     public function test_set_add_hours(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $row = [
             'cover_title' => 'Title',
@@ -249,7 +254,7 @@ final class ArticleTest extends TestCase
 
     public function test_to_array_returns_all_fields(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $row = [
             'cover_title' => 'Title',
@@ -275,7 +280,7 @@ final class ArticleTest extends TestCase
 
     public function test_body_converts_html_to_markdown(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $row = [
             'cover_title' => 'Title',
@@ -296,7 +301,7 @@ final class ArticleTest extends TestCase
 
     public function test_body_callback_chaining(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $row = [
             'cover_title' => 'Title',
@@ -324,7 +329,7 @@ final class ArticleTest extends TestCase
 
     public function test_make_returns_static_instance(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $article = Article::make($map);
 

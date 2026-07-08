@@ -7,9 +7,14 @@ use PHPUnit\Framework\TestCase;
 
 final class MapperTest extends TestCase
 {
+    private function jsonPath(): string
+    {
+        return getcwd().'/db-to-markdown.json';
+    }
+
     public function test_can_get_map_what_you_want(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $this->assertIsArray($map);
         $this->assertArrayHasKey('title', $map);
@@ -21,9 +26,7 @@ final class MapperTest extends TestCase
 
     public function test_can_get_map_from_json_file(): void
     {
-        $path = getcwd().'/db-to-markdown.json';
-
-        $map = Mapper::getMap($path);
+        $map = Mapper::getMap($this->jsonPath());
 
         $this->assertIsArray($map);
         $this->assertArrayHasKey('title', $map);
@@ -35,7 +38,7 @@ final class MapperTest extends TestCase
 
     public function test_can_get_flatten_fields_from_mapper(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $fields = (new Mapper(...$map))->fields();
 
@@ -51,7 +54,7 @@ final class MapperTest extends TestCase
 
     public function test_can_get_where_condition(): void
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->jsonPath());
 
         $where = (new Mapper(...$map))->where();
 
