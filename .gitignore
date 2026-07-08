@@ -185,5 +185,6 @@ $RECYCLE.BIN/
 
 /.env
 /db-to-markdown.json
+/database/database.sqlite
 /cache
 /doctum.php
