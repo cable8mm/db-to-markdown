@@ -2,18 +2,19 @@
 
 namespace Cable8mm\DbToMarkdown\Test;
 
+use Cable8mm\DbToMarkdown\Command\CleanCommand;
 use Cable8mm\DbToMarkdown\Command\CreateJekyllCommand;
 use Cable8mm\DbToMarkdown\Command\CreateMarkdownsCommand;
+use Cable8mm\DbToMarkdown\Command\SeedingCommand;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
 
 final class BaseCommandTest extends TestCase
 {
     public function test_create_md_command_has_correct_name(): void
     {
-        $application = new Application();
-        $application->add(new CreateMarkdownsCommand());
+        $application = new Application;
+        $application->add(new CreateMarkdownsCommand);
 
         $command = $application->find('create-markdowns');
 
@@ -22,8 +23,8 @@ final class BaseCommandTest extends TestCase
 
     public function test_create_md_command_has_aliases(): void
     {
-        $application = new Application();
-        $application->add(new CreateMarkdownsCommand());
+        $application = new Application;
+        $application->add(new CreateMarkdownsCommand);
 
         $command = $application->find('create-md');
 
@@ -33,8 +34,8 @@ final class BaseCommandTest extends TestCase
 
     public function test_create_jekyll_command_has_correct_name(): void
     {
-        $application = new Application();
-        $application->add(new CreateJekyllCommand());
+        $application = new Application;
+        $application->add(new CreateJekyllCommand);
 
         $command = $application->find('create-jekyll');
 
@@ -43,8 +44,8 @@ final class BaseCommandTest extends TestCase
 
     public function test_create_jekyll_command_has_aliases(): void
     {
-        $application = new Application();
-        $application->add(new CreateJekyllCommand());
+        $application = new Application;
+        $application->add(new CreateJekyllCommand);
 
         $command = $application->find('add-jekyll');
 
@@ -54,8 +55,8 @@ final class BaseCommandTest extends TestCase
 
     public function test_clean_command_has_aliases(): void
     {
-        $application = new Application();
-        $application->add(new \Cable8mm\DbToMarkdown\Command\CleanCommand());
+        $application = new Application;
+        $application->add(new CleanCommand);
 
         $command = $application->find('trash');
 
@@ -65,8 +66,8 @@ final class BaseCommandTest extends TestCase
 
     public function test_seeding_command_has_aliases(): void
     {
-        $application = new Application();
-        $application->add(new \Cable8mm\DbToMarkdown\Command\SeedingCommand());
+        $application = new Application;
+        $application->add(new SeedingCommand);
 
         $command = $application->find('seed');
 

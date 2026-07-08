@@ -30,7 +30,7 @@ final class ArticleTest extends TestCase
             'id' => 1,
             'contents' => $html,
             'cast_category_id' => $faker->numberBetween(0, 7),
-            'display_at' => new Carbon(),
+            'display_at' => new Carbon,
         ];
 
         $article = Article::make($map)

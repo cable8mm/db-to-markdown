@@ -43,7 +43,7 @@ final class SeederTest extends TestCase
 
         $table = $this->model->getTable();
 
-        $seeder = new Seeder();
+        $seeder = new Seeder;
 
         $seeder->run();
         $seeder->run();

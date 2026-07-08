@@ -10,9 +10,7 @@ class Markdown implements IFormat
         private Carbon $date,
         private string $body,
         private string $slug,
-    ) {
-
-    }
+    ) {}
 
     public function getExtension(): string
     {

@@ -16,11 +16,13 @@ class Article
 
     public ?string $categories = null;
 
-    private $resolveCategories;
+    /** @var array<int|string, string>|null */
+    private ?array $resolveCategories = null;
 
     public string $body;
 
-    private $bodyCallbacks;
+    /** @var array<callable>|null */
+    private ?array $bodyCallbacks = null;
 
     public Carbon $publishedAt;
 
@@ -39,7 +41,7 @@ class Article
 
     public function __construct()
     {
-        $this->converter = new HtmlConverter();
+        $this->converter = new HtmlConverter;
     }
 
     private function title(): void
@@ -60,7 +62,7 @@ class Article
 
         $title = preg_replace('/\s+$/', '', $title);
 
-        $this->title = preg_replace('/"/', '\"', $title);
+        $this->title = str_replace('"', '', $title);
     }
 
     private function slug(): void
@@ -167,7 +169,7 @@ class Article
 
     public static function make($map): static
     {
-        $article = new static();
+        $article = new static;
 
         if (is_array($map)) {
             $article->mapper = new Mapper(...$map);

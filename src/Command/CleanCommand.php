@@ -28,9 +28,9 @@ class CleanCommand extends Command
     }
 
     /**
-     * Create Markdown files
+     * Delete generated Markdown files from the dist folder.
      *
-     * Run bin/console delete-markdowns
+     * Run bin/console clean
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

@@ -51,7 +51,7 @@ class DB
     public static function getInstance(): static
     {
         if (self::$instance === null) {
-            self::$instance = new self();
+            self::$instance = new self;
         }
 
         return self::$instance;

@@ -56,9 +56,9 @@ final class JekyllTest extends TestCase
         $render = $jekyll->render();
 
         $this->assertStringStartsWith('---'.PHP_EOL, $render);
-        $this->assertStringContainsString('layout : post', $render);
-        $this->assertStringContainsString('title : "My Post Title"', $render);
-        $this->assertStringContainsString('author : John Doe', $render);
+        $this->assertStringContainsString('layout: post', $render);
+        $this->assertStringContainsString('title: "My Post Title"', $render);
+        $this->assertStringContainsString('author: John Doe', $render);
         $this->assertStringEndsWith('---'.PHP_EOL.'# Post body content', $render);
     }
 
@@ -76,7 +76,7 @@ final class JekyllTest extends TestCase
 
         $render = $jekyll->render();
 
-        $this->assertStringContainsString('categories : tech', $render);
+        $this->assertStringContainsString('categories: tech', $render);
     }
 
     public function test_it_omits_categories_if_null(): void

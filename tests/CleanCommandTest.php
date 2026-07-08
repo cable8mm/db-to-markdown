@@ -37,8 +37,8 @@ final class CleanCommandTest extends TestCase
 
     public function test_it_deletes_md_files(): void
     {
-        $application = new Application();
-        $application->add(new CleanCommand());
+        $application = new Application;
+        $application->add(new CleanCommand);
 
         $command = $application->find('clean');
         $commandTester = new CommandTester($command);
@@ -54,8 +54,8 @@ final class CleanCommandTest extends TestCase
 
     public function test_it_keeps_non_markdown_files(): void
     {
-        $application = new Application();
-        $application->add(new CleanCommand());
+        $application = new Application;
+        $application->add(new CleanCommand);
 
         $command = $application->find('clean');
         $commandTester = new CommandTester($command);
@@ -70,8 +70,8 @@ final class CleanCommandTest extends TestCase
 
     public function test_it_returns_success(): void
     {
-        $application = new Application();
-        $application->add(new CleanCommand());
+        $application = new Application;
+        $application->add(new CleanCommand);
 
         $command = $application->find('clean');
         $commandTester = new CommandTester($command);
