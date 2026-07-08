@@ -23,9 +23,11 @@ class Model
 
     private function __construct()
     {
+        $databasePath = defined('DB_TEST_DATABASE') ? DB_TEST_DATABASE : (__DIR__.'/../database/database.sqlite');
+
         $this->connection = new Medoo([
             'type' => 'sqlite',
-            'database' => __DIR__.'/../database/database.sqlite',
+            'database' => $databasePath,
         ]);
 
         $this->table = DB::table();

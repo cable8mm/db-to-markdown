@@ -31,9 +31,11 @@ class DB
         }
 
         if ($_ENV['DB_CONNECTION'] == 'sqlite') {
+            $databasePath = $_ENV['DB_DATABASE'] ?? __DIR__.'/../database/database.sqlite';
+
             $params = [
                 'type' => 'sqlite',
-                'database' => __DIR__.'/../database/database.sqlite',
+                'database' => $databasePath,
             ];
         }
 

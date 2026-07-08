@@ -2,6 +2,7 @@
 
 namespace Cable8mm\DbToMarkdown\Models;
 
+use Cable8mm\DbToMarkdown\Mappers\Mapper;
 use Carbon\Carbon;
 use InvalidArgumentException;
 use League\HTMLToMarkdown\HtmlConverter;
@@ -25,7 +26,7 @@ class Article
 
     private ?int $addHours = null;
 
-    private array $map;
+    private Mapper $mapper;
 
     private HtmlConverter $converter;
 
@@ -38,20 +39,22 @@ class Article
 
     public function __construct()
     {
-        $this->converter = new HtmlConverter;
+        $this->converter = new HtmlConverter();
     }
 
     private function title(): void
     {
-        if (is_string($this->map['title'])) {
-            $this->title = $this->row[$this->map['title']];
+        $titleField = $this->mapper->getTitle();
+
+        if (is_string($titleField)) {
+            $this->title = $this->row[$titleField];
 
             return;
         }
 
         $title = '';
 
-        foreach ($this->map['title'] as $item) {
+        foreach ($titleField as $item) {
             $title .= $this->row[$item].' ';
         }
 
@@ -62,12 +65,12 @@ class Article
 
     private function slug(): void
     {
-        $this->slug = preg_replace('/[_ ]/', '-', $this->row[$this->map['slug']]);
+        $this->slug = preg_replace('/[_ ]/', '-', $this->row[$this->mapper->getSlug()]);
     }
 
     private function categories(): void
     {
-        $this->categories = $this->row[$this->map['categories']];
+        $this->categories = $this->row[$this->mapper->getCategories()];
 
         if (! is_null($this->resolveCategories)) {
             if (is_null($this->categories)) {
@@ -84,7 +87,7 @@ class Article
 
     private function body(): void
     {
-        $body = $this->row[$this->map['body']];
+        $body = $this->row[$this->mapper->getBody()];
 
         if (! is_null($this->bodyCallbacks)) {
             foreach ($this->bodyCallbacks as $callback) {
@@ -101,7 +104,9 @@ class Article
             return $this->publishedAt;
         }
 
-        $publishedAt = new Carbon($this->row[$this->map['published_at']]);
+        $publishedAtField = $this->mapper->getPublishedAt();
+
+        $publishedAt = new Carbon($this->row[is_string($publishedAtField) ? $publishedAtField : $publishedAtField[0]]);
 
         if (! is_null($this->addHours)) {
             $publishedAt = $publishedAt->addHours($this->addHours);
@@ -162,9 +167,13 @@ class Article
 
     public static function make($map): static
     {
-        $article = new static;
+        $article = new static();
 
-        $article->map = $map;
+        if (is_array($map)) {
+            $article->mapper = new Mapper(...$map);
+        } elseif ($map instanceof Mapper) {
+            $article->mapper = $map;
+        }
 
         return $article;
     }
