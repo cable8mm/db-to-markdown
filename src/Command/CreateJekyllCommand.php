@@ -59,7 +59,7 @@ class CreateJekyllCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap(DB::mapper());
 
         $mapper = new Mapper(...$map);
 

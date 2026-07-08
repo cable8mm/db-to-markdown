@@ -30,7 +30,7 @@ final class SeederTest extends TestCase
 
         $count = $connection->count($table);
 
-        (new Seeder())->run();
+        (new Seeder)->run();
 
         $nextCount = $connection->count($table);
 

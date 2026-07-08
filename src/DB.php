@@ -49,10 +49,18 @@ class DB
     public static function getInstance(): static
     {
         if (self::$instance === null) {
-            self::$instance = new self();
+            self::$instance = new self;
         }
 
         return self::$instance;
+    }
+
+    /**
+     * Set a custom instance (useful for testing / DI).
+     */
+    public static function setInstance(?self $instance): void
+    {
+        self::$instance = $instance;
     }
 
     public function isConnected(): bool
@@ -72,5 +80,14 @@ class DB
         }
 
         return $_ENV['DB_TABLE'];
+    }
+
+    public static function mapper(): string
+    {
+        if (! isset($_ENV['DB_MAPPER'])) {
+            self::loadEnv();
+        }
+
+        return $_ENV['DB_MAPPER'] ?? 'DogStory';
     }
 }

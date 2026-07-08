@@ -13,7 +13,7 @@ final class JekyllTest extends TestCase
         $jekyll = new Jekyll(
             layout: 'single',
             title: 'Sample Title',
-            date: new Carbon(),
+            date: new Carbon,
             author: 'Samgu Lee',
             body: '## Heading'.PHP_EOL.PHP_EOL.'Contents',
             slug: '1'
@@ -26,7 +26,7 @@ final class JekyllTest extends TestCase
 
     public function test_it_must_use_camelcase_filename(): void
     {
-        $now = new Carbon();
+        $now = new Carbon;
 
         $jekyll = new Jekyll(
             layout: 'single',

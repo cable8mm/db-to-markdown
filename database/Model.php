@@ -19,6 +19,8 @@ class Model
 
     private Generator $faker;
 
+    private string $currentMapper;
+
     private function __construct()
     {
         $this->connection = new Medoo([
@@ -28,13 +30,15 @@ class Model
 
         $this->table = DB::table();
 
+        $this->currentMapper = DB::mapper();
+
         $this->faker = Factory::create();
     }
 
     public static function getInstance(): static
     {
         if (self::$instance === null) {
-            self::$instance = new self();
+            self::$instance = new self;
         }
 
         return self::$instance;
@@ -52,7 +56,7 @@ class Model
 
     public function up(): ?\PDOStatement
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->currentMapper);
 
         $fields = (new Mapper(...$map))->fields();
 
@@ -72,7 +76,7 @@ class Model
 
     public function factory(): ?\PDOStatement
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap($this->currentMapper);
 
         $fields = (new Mapper(...$map))->fields();
 

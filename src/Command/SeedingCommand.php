@@ -28,7 +28,7 @@ class SeedingCommand extends Command
 
         Model::getInstance()->up();
 
-        (new Seeder())->run();
+        (new Seeder)->run();
 
         return Command::SUCCESS;
     }

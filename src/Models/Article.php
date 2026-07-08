@@ -38,7 +38,7 @@ class Article
 
     public function __construct()
     {
-        $this->converter = new HtmlConverter();
+        $this->converter = new HtmlConverter;
     }
 
     private function title(): void
@@ -162,7 +162,7 @@ class Article
 
     public static function make($map): static
     {
-        $article = new static();
+        $article = new static;
 
         $article->map = $map;
 

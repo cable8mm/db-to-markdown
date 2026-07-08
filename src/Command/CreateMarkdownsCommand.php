@@ -22,8 +22,10 @@ class CreateMarkdownsCommand extends Command
 {
     private Medoo $database;
 
-    protected function configure()
+    public function __construct()
     {
+        parent::__construct();
+
         $this->database = DB::getInstance()->getConnection();
     }
 
@@ -34,7 +36,7 @@ class CreateMarkdownsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $map = Mapper::getMap('DogStory');
+        $map = Mapper::getMap(DB::mapper());
 
         $mapper = new Mapper(...$map);
 

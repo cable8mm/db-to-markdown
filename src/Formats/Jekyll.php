@@ -14,17 +14,15 @@ class Jekyll implements IFormat
         private string $body,
         private string $slug,
         private ?string $categories = null
-    ) {
+    ) {}
 
-    }
-
-    public function path(string $extention = 'markdown'): string
+    public function path(string $extension = 'markdown'): string
     {
         $prefix = $this->date->format('Y-m-d');
 
         $filename = preg_replace('/[_ ]/', '-', $this->slug);
 
-        return $prefix.'-'.$filename.'.'.$extention;
+        return $prefix.'-'.$filename.'.'.$extension;
     }
 
     public function render(): string
