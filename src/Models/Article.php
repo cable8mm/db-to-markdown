@@ -4,7 +4,6 @@ namespace Cable8mm\DbToMarkdown\Models;
 
 use Cable8mm\DbToMarkdown\Mappers\Mapper;
 use Carbon\Carbon;
-use InvalidArgumentException;
 use League\HTMLToMarkdown\HtmlConverter;
 
 class Article
@@ -75,15 +74,16 @@ class Article
         $this->categories = $this->row[$this->mapper->getCategories()];
 
         if (! is_null($this->resolveCategories)) {
+            // If resolveCategories is set, map the category value
             if (is_null($this->categories)) {
-                throw new InvalidArgumentException($this->slug.' slug\'s category must exist.');
+                // Null category when using resolveCategories: keep as null (no mapping)
+                return;
             }
 
-            if (! in_array($this->categories, array_keys($this->resolveCategories))) {
-                throw new InvalidArgumentException($this->categories.' is an invalid category. Categories must include one of '.implode(',', array_keys($this->resolveCategories)));
+            if (array_key_exists($this->categories, $this->resolveCategories)) {
+                $this->categories = $this->resolveCategories[$this->categories];
             }
-
-            $this->categories = $this->resolveCategories[$this->categories];
+            // If category not in the map, keep original value
         }
     }
 

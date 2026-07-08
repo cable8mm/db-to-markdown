@@ -70,6 +70,14 @@ abstract class BaseCommand extends Command
             'Limit the number of records to process',
             null
         );
+
+        $this->addOption(
+            'offset',
+            's',
+            InputOption::VALUE_OPTIONAL,
+            'Offset for pagination',
+            null
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -87,9 +95,14 @@ abstract class BaseCommand extends Command
         $where = $mapper->where();
 
         $limit = $input->getOption('limit');
+        $offset = $input->getOption('offset');
 
         if ($limit !== null) {
             $where['LIMIT'] = (int) $limit;
+        }
+
+        if ($offset !== null) {
+            $where['OFFSET'] = (int) $offset;
         }
 
         $articles = $this->getDatabase()->select(DB::table(), $mapper->fields(), $where);

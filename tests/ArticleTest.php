@@ -6,7 +6,6 @@ use Cable8mm\DbToMarkdown\Mappers\Mapper;
 use Cable8mm\DbToMarkdown\Models\Article;
 use Carbon\Carbon;
 use Faker\Factory;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 final class ArticleTest extends TestCase
@@ -148,10 +147,8 @@ final class ArticleTest extends TestCase
         $this->assertNull($article->categories);
     }
 
-    public function test_resolve_categories_throws_exception_for_null(): void
+    public function test_resolve_categories_keeps_null_when_null(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
         $map = Mapper::getMap($this->jsonPath());
 
         $row = [
@@ -164,15 +161,15 @@ final class ArticleTest extends TestCase
             'display_at' => '2024-01-15 10:00:00',
         ];
 
-        Article::make($map)
+        $article = Article::make($map)
             ->resolveCategories([0 => '기타', 1 => '행동'])
             ->in($row);
+
+        $this->assertNull($article->categories);
     }
 
-    public function test_resolve_categories_throws_exception_for_invalid(): void
+    public function test_resolve_categories_keeps_original_when_not_in_map(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
         $map = Mapper::getMap($this->jsonPath());
 
         $row = [
@@ -185,9 +182,11 @@ final class ArticleTest extends TestCase
             'display_at' => '2024-01-15 10:00:00',
         ];
 
-        Article::make($map)
+        $article = Article::make($map)
             ->resolveCategories([0 => '기타', 1 => '행동'])
             ->in($row);
+
+        $this->assertEquals('99', $article->categories);
     }
 
     public function test_resolve_categories_maps_correctly(): void

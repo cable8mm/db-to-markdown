@@ -137,6 +137,9 @@ php bin/console create-md --dry-run
 
 php bin/console create-md --limit=5
 # Process only 5 records
+
+php bin/console create-md --limit=10 --offset=20
+# Process 10 records starting from offset 20
 ```
 
 ## How to Develop Custom Commands
