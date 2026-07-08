@@ -66,7 +66,7 @@ class Mapper
                 throw new \InvalidArgumentException($path.' is not a valid JSON mapper file.');
             }
 
-            return $decoded;
+            return $decoded['map'] ?? $decoded;
         }
 
         return require $path;

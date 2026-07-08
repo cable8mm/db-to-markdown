@@ -77,11 +77,7 @@ class DB
 
     public static function table(): string
     {
-        if (! isset($_ENV['DB_TABLE'])) {
-            self::loadEnv();
-        }
-
-        return $_ENV['DB_TABLE'];
+        return self::config()['table'] ?? 'posts';
     }
 
     public static function mapper(): string
@@ -91,21 +87,13 @@ class DB
 
     public static function author(): string
     {
-        if (! isset($_ENV['DB_AUTHOR'])) {
-            self::loadEnv();
-        }
-
-        return $_ENV['DB_AUTHOR'] ?? 'Companimal';
+        return self::config()['author'] ?? 'Companimal';
     }
 
     public static function categories(): array
     {
-        if (! isset($_ENV['DB_CATEGORIES'])) {
-            self::loadEnv();
-        }
-
-        if (isset($_ENV['DB_CATEGORIES'])) {
-            return json_decode($_ENV['DB_CATEGORIES'], true);
+        if (isset(self::config()['category_labels'])) {
+            return self::config()['category_labels'];
         }
 
         return [
@@ -118,5 +106,29 @@ class DB
             '장소',
             '상품',
         ];
+    }
+
+    /**
+     * Load the project-wide db-to-markdown.json configuration (cached).
+     *
+     * @return array<string, mixed>
+     */
+    private static function config(): array
+    {
+        static $config = null;
+
+        if ($config === null) {
+            $path = self::mapper();
+
+            if (is_file($path)) {
+                $decoded = json_decode((string) file_get_contents($path), true);
+
+                $config = is_array($decoded) ? $decoded : [];
+            } else {
+                $config = [];
+            }
+        }
+
+        return $config;
     }
 }

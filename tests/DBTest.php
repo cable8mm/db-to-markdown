@@ -20,13 +20,6 @@ final class DBTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_can_get_table_from_env(): void
-    {
-        $table = DB::table();
-
-        $this->assertIsString($table);
-    }
-
     public function test_can_get_mapper_path(): void
     {
         $mapper = DB::mapper();
@@ -35,19 +28,28 @@ final class DBTest extends TestCase
         $this->assertStringEndsWith('db-to-markdown.json', $mapper);
     }
 
-    public function test_can_get_author_from_env(): void
+    public function test_can_get_author_from_config(): void
     {
         $author = DB::author();
 
         $this->assertIsString($author);
+        $this->assertEquals('Companimal', $author);
     }
 
-    public function test_can_get_categories_from_env(): void
+    public function test_can_get_categories_from_config(): void
     {
         $categories = DB::categories();
 
         $this->assertIsArray($categories);
         $this->assertArrayHasKey(0, $categories);
+    }
+
+    public function test_can_get_table_from_config(): void
+    {
+        $table = DB::table();
+
+        $this->assertIsString($table);
+        $this->assertEquals('hp2_casts', $table);
     }
 
     public function test_can_set_custom_instance(): void
