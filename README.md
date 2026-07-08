@@ -58,7 +58,7 @@ DB_PASSWORD=password
 DB_PORT=3306
 ```
 
-If `.env` is not provided, SQLite is used by default with `database/database.sqlite`.
+If `.env` is not provided, SQLite is used by default with `database/database.sqlite`. You can customize the SQLite path by setting `DB_DATABASE` in your `.env` file. To skip database configuration entirely, leave `.env` out and use `php bin/console seeding` to seed the built-in SQLite database.
 
 ### 2. Table Mapping (`db-to-markdown.json`)
 
