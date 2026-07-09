@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.4.0 - 2026-07-08
+
+### What's Changed
+
+* feat: improvements by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/23
+* docs: fix php versions by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/24
+
+**Full Changelog**: https://github.com/cable8mm/db-to-markdown/compare/v1.3.3...v1.4.0
+
 ## v1.3.3 - 2024-03-09
 
 ### What's Changed
