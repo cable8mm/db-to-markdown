@@ -1,5 +1,5 @@
 var Doctum = {
-    treeJson: {"tree":{"l":0,"n":"","p":"","c":[{"l":1,"n":"Cable8mm","p":"Cable8mm","c":[{"l":2,"n":"DbToMarkdown","p":"Cable8mm/DbToMarkdown","c":[{"l":3,"n":"Command","p":"Cable8mm/DbToMarkdown/Command","c":[{"l":4,"n":"CleanCommand","p":"Cable8mm/DbToMarkdown/Command/CleanCommand"},{"l":4,"n":"CreateJekyllCommand","p":"Cable8mm/DbToMarkdown/Command/CreateJekyllCommand"},{"l":4,"n":"CreateMarkdownsCommand","p":"Cable8mm/DbToMarkdown/Command/CreateMarkdownsCommand"},{"l":4,"n":"SeedingCommand","p":"Cable8mm/DbToMarkdown/Command/SeedingCommand"}]},{"l":3,"n":"Formats","p":"Cable8mm/DbToMarkdown/Formats","c":[{"l":4,"n":"IFormat","p":"Cable8mm/DbToMarkdown/Formats/IFormat"},{"l":4,"n":"Jekyll","p":"Cable8mm/DbToMarkdown/Formats/Jekyll"},{"l":4,"n":"Markdown","p":"Cable8mm/DbToMarkdown/Formats/Markdown"}]},{"l":3,"n":"Mappers","p":"Cable8mm/DbToMarkdown/Mappers","c":[{"l":4,"n":"Mapper","p":"Cable8mm/DbToMarkdown/Mappers/Mapper"}]},{"l":3,"n":"Models","p":"Cable8mm/DbToMarkdown/Models","c":[{"l":4,"n":"Article","p":"Cable8mm/DbToMarkdown/Models/Article"}]},{"l":3,"n":"DB","p":"Cable8mm/DbToMarkdown/DB"}]}]}]},"treeOpenLevel":2},
+    treeJson: {"tree":{"l":0,"n":"","p":"","c":[{"l":1,"n":"Cable8mm","p":"Cable8mm","c":[{"l":2,"n":"DbToMarkdown","p":"Cable8mm/DbToMarkdown","c":[{"l":3,"n":"Command","p":"Cable8mm/DbToMarkdown/Command","c":[{"l":4,"n":"BaseCommand","p":"Cable8mm/DbToMarkdown/Command/BaseCommand"},{"l":4,"n":"CleanCommand","p":"Cable8mm/DbToMarkdown/Command/CleanCommand"},{"l":4,"n":"CreateJekyllCommand","p":"Cable8mm/DbToMarkdown/Command/CreateJekyllCommand"},{"l":4,"n":"CreateMarkdownsCommand","p":"Cable8mm/DbToMarkdown/Command/CreateMarkdownsCommand"},{"l":4,"n":"InitCommand","p":"Cable8mm/DbToMarkdown/Command/InitCommand"},{"l":4,"n":"SeedingCommand","p":"Cable8mm/DbToMarkdown/Command/SeedingCommand"}]},{"l":3,"n":"Formats","p":"Cable8mm/DbToMarkdown/Formats","c":[{"l":4,"n":"IFormat","p":"Cable8mm/DbToMarkdown/Formats/IFormat"},{"l":4,"n":"Jekyll","p":"Cable8mm/DbToMarkdown/Formats/Jekyll"},{"l":4,"n":"Markdown","p":"Cable8mm/DbToMarkdown/Formats/Markdown"}]},{"l":3,"n":"Mappers","p":"Cable8mm/DbToMarkdown/Mappers","c":[{"l":4,"n":"Mapper","p":"Cable8mm/DbToMarkdown/Mappers/Mapper"}]},{"l":3,"n":"Models","p":"Cable8mm/DbToMarkdown/Models","c":[{"l":4,"n":"Article","p":"Cable8mm/DbToMarkdown/Models/Article"}]},{"l":3,"n":"DB","p":"Cable8mm/DbToMarkdown/DB"}]}]}]},"treeOpenLevel":2},
     /** @var boolean */
     treeLoaded: false,
     /** @var boolean */
@@ -261,10 +261,13 @@ var Doctum = {
     /**
      * Clean the search query
      *
-     * @param string query
+     * @param string|null query
      * @return string
      */
     cleanSearchQuery: function (query) {
+        if (typeof query !== 'string') {
+            return '';
+        }
         // replace any chars that could lead to injecting code in our regex
         // remove start or end spaces
         // replace backslashes by an escaped version, use case in search: \myRootFunction

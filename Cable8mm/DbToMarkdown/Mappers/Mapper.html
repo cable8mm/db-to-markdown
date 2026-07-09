@@ -90,6 +90,7 @@
 </p>
 
         
+        
     
         
 
@@ -105,7 +106,7 @@
                     
                 </div>
                 <div class="col-md-8">
-                    <a href="#method___construct">__construct</a>(<abbr title="Cable8mm\DbToMarkdown\Mappers\string|array">string|array</abbr> $title, string $slug, string $categories, string $body, <abbr title="Cable8mm\DbToMarkdown\Mappers\string|array">string|array</abbr> $published_at)
+                    <a href="#method___construct">__construct</a>(string|array $title, string $slug, string $categories, string $body, string|array $published_at)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -135,10 +136,87 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    static&nbsp;
+                    static&nbsp;array
                 </div>
                 <div class="col-md-8">
-                    <a href="#method_getMap">getMap</a>($filename)
+                    <a href="#method_getMap">getMap</a>(string $path)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string|array
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getTitle">getTitle</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getSlug">getSlug</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getCategories">getCategories</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getBody">getBody</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string|array
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getPublishedAt">getPublishedAt</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_isTitleArray">isTitleArray</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_toArray">toArray</a>()
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -154,10 +232,11 @@
                     <h3 id="method___construct">
         <div class="location">at line 19</div>
         <code>                    
-    <strong>__construct</strong>(<abbr title="Cable8mm\DbToMarkdown\Mappers\string|array">string|array</abbr> $title, string $slug, string $categories, string $body, <abbr title="Cable8mm\DbToMarkdown\Mappers\string|array">string|array</abbr> $published_at)
+    <strong>__construct</strong>(string|array $title, string $slug, string $categories, string $body, string|array $published_at)
         </code>
     </h3>
     <div class="details">    
+            
     
             
 
@@ -170,7 +249,7 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><abbr title="Cable8mm\DbToMarkdown\Mappers\string|array">string|array</abbr></td>
+                <td>string|array</td>
                 <td>$title</td>
                 <td></td>
             </tr>
@@ -190,7 +269,7 @@
                 <td></td>
             </tr>
                     <tr>
-                <td><abbr title="Cable8mm\DbToMarkdown\Mappers\string|array">string|array</abbr></td>
+                <td>string|array</td>
                 <td>$published_at</td>
                 <td></td>
             </tr>
@@ -212,6 +291,7 @@
         </code>
     </h3>
     <div class="details">    
+            
     
             
 
@@ -245,6 +325,7 @@
         </code>
     </h3>
     <div class="details">    
+            
     
             
 
@@ -273,11 +354,12 @@
                     <div class="method-item">
                     <h3 id="method_getMap">
         <div class="location">at line 54</div>
-        <code>        static            
-    <strong>getMap</strong>($filename)
+        <code>        static            array
+    <strong>getMap</strong>(string $path)
         </code>
     </h3>
     <div class="details">    
+            
     
             
 
@@ -290,13 +372,260 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td></td>
-                <td>$filename</td>
+                <td>string</td>
+                <td>$path</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTitle">
+        <div class="location">at line 80</div>
+        <code>                    string|array
+    <strong>getTitle</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+            
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string|array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSlug">
+        <div class="location">at line 85</div>
+        <code>                    string
+    <strong>getSlug</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+            
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCategories">
+        <div class="location">at line 90</div>
+        <code>                    string
+    <strong>getCategories</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+            
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBody">
+        <div class="location">at line 95</div>
+        <code>                    string
+    <strong>getBody</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+            
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPublishedAt">
+        <div class="location">at line 100</div>
+        <code>                    string|array
+    <strong>getPublishedAt</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+            
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string|array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_isTitleArray">
+        <div class="location">at line 105</div>
+        <code>                    bool
+    <strong>isTitleArray</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+            
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_toArray">
+        <div class="location">at line 110</div>
+        <code>                    array
+    <strong>toArray</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+            
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
             
