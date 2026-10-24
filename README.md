@@ -9,7 +9,87 @@
 [![Packagist Stars](https://img.shields.io/packagist/stars/cable8mm/db-to-markdown)](https://github.com/cable8mm/db-to-markdown/stargazers)
 ![Packagist License](https://img.shields.io/packagist/l/cable8mm/db-to-markdown)
 
-This tool generates Markdown files from a database table. It supports multiple output formats including Jekyll, Astro, Gatsby, or any custom format you create.
+Convert WordPress posts to Markdown or Jekyll, or export content from any other database. This CLI reads a database table or view, converts HTML content to Markdown, and writes one file per record. Jekyll output includes YAML front matter.
+
+It is not a WordPress plugin or a one-click site importer: you connect to the WordPress database and map the columns to export. For the standard WordPress schema, use a database view to select published posts and expose their categories alongside the post fields.
+
+## Convert WordPress to Jekyll
+
+### 1. Expose published posts in a database view
+
+The WordPress `wp_posts` table contains drafts, pages, revisions, and other records, and it does not contain category names directly. A view can filter to published posts and join their category slugs. Jekyll accepts categories as a space-separated string. Replace the `wp_` prefix below if your site uses a different table prefix:
+
+```sql
+CREATE VIEW jekyll_posts AS
+SELECT
+    p.ID AS id,
+    p.post_title AS title,
+    p.post_name AS slug,
+    GROUP_CONCAT(DISTINCT t.slug ORDER BY t.slug SEPARATOR ' ') AS categories,
+    p.post_content AS content,
+    p.post_date AS published_at
+FROM wp_posts AS p
+LEFT JOIN wp_term_relationships AS tr ON tr.object_id = p.ID
+LEFT JOIN wp_term_taxonomy AS tt
+    ON tt.term_taxonomy_id = tr.term_taxonomy_id
+    AND tt.taxonomy = 'category'
+LEFT JOIN wp_terms AS t ON t.term_id = tt.term_id
+WHERE p.post_type = 'post'
+  AND p.post_status = 'publish'
+GROUP BY p.ID, p.post_title, p.post_name, p.post_content, p.post_date;
+```
+
+### 2. Connect and map the view
+
+Set your WordPress database credentials in `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_DATABASE=wordpress
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_password
+DB_PORT=3306
+```
+
+Then map the view columns in `db-to-markdown.json`:
+
+```json
+{
+  "table": "jekyll_posts",
+  "author": "Your Name",
+  "map": {
+    "title": "title",
+    "slug": "slug",
+    "categories": "categories",
+    "body": "content",
+    "published_at": "published_at"
+  }
+}
+```
+
+### 3. Generate Jekyll posts
+
+```sh
+php bin/console create-jekyll
+```
+
+The command writes `.markdown` files with Jekyll front matter to `dist/`, for example:
+
+```yaml
+---
+layout: single
+title: "A WordPress post"
+date: 2024-06-15 14:30:00
+categories: news updates
+author: Your Name
+---
+The post body converted to Markdown.
+```
+
+The configured author is shared across the generated posts. WordPress shortcodes, custom fields, or per-post authors may need additional columns in the view and a custom command or body callback.
+
+For a simpler source table or view that already has the required columns, skip the WordPress-specific view and follow the general [table mapping](#2-table-mapping-db-to-markdownjson) below.
 
 We have provided the API Documentation on the web. For more information, please visit <https://www.palgle.com/db-to-markdown/> ❤️
 
