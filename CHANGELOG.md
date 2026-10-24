@@ -1,5 +1,13 @@
 # Release Notes
 
+## v1.4.1 - 2026-10-24
+
+### What's Changed
+
+* Fix export edge cases by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/db-to-markdown/pull/25
+
+**Full Changelog**: https://github.com/cable8mm/db-to-markdown/compare/v1.4.0...v1.4.1
+
 ## v1.4.0 - 2026-07-08
 
 ### What's Changed
