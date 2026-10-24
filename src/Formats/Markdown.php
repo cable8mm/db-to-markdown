@@ -23,7 +23,8 @@ class Markdown implements IFormat
 
         $prefix = $this->date->format('Y-m-d');
 
-        $filename = preg_replace('/[_ ]/', '-', $this->slug);
+        $filename = preg_replace('/[^\pL\pN-]+/u', '-', $this->slug) ?? '';
+        $filename = trim($filename, '-_') ?: 'untitled';
 
         return $prefix.'-'.$filename.'.'.$ext;
     }
