@@ -45,6 +45,11 @@ class Mapper
         $where = [];
 
         foreach ($flatten as $item) {
+            // Categories are optional and are rendered as null when absent.
+            if ($item === $this->categories) {
+                continue;
+            }
+
             $where[$item.'[!]'] = null;
         }
 

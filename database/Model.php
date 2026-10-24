@@ -121,7 +121,7 @@ class Model
         $body = $mapper->getBody();
         $publishedAt = $mapper->getPublishedAt();
 
-        if (is_string($title) || (is_array($title) && in_array($field, $title))) {
+        if ($field === $title || (is_array($title) && in_array($field, $title, true))) {
             $description = [
                 'VARCHAR',
             ];
@@ -145,7 +145,7 @@ class Model
             ];
         }
 
-        if ($field === $publishedAt) {
+        if ($field === $publishedAt || (is_array($publishedAt) && in_array($field, $publishedAt, true))) {
             $description = [
                 'DATETIME',
             ];
@@ -170,7 +170,7 @@ class Model
         $body = $mapper->getBody();
         $publishedAt = $mapper->getPublishedAt();
 
-        if (is_string($title) || (is_array($title) && in_array($field, $title))) {
+        if ($field === $title || (is_array($title) && in_array($field, $title, true))) {
             $fake = $this->faker->sentence();
         }
 
@@ -186,7 +186,7 @@ class Model
             $fake = $this->faker->text();
         }
 
-        if ($field === $publishedAt) {
+        if ($field === $publishedAt || (is_array($publishedAt) && in_array($field, $publishedAt, true))) {
             $fake = $this->faker->dateTime()->format('Y-m-d H:i:s');
         }
 

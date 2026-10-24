@@ -113,8 +113,6 @@ abstract class BaseCommand extends Command
             mkdir($outputDir, 0755, true);
         }
 
-        $count = 0;
-
         $isDryRun = $input->getOption('dry-run');
 
         if ($isDryRun) {
@@ -127,17 +125,31 @@ abstract class BaseCommand extends Command
             return Command::SUCCESS;
         }
 
+        $files = [];
         foreach ($articles as $row) {
             $article = $this->configureArticle(Article::make($map)->in($row));
 
             $format = $this->makeFormat($article);
+            $path = $format->path();
 
-            file_put_contents($outputDir.$format->path(), $format->render());
+            if (isset($files[$path])) {
+                $output->writeln(sprintf('<error>Duplicate output path: %s</error>', $path));
 
-            $count++;
+                return Command::FAILURE;
+            }
+
+            $files[$path] = $format->render();
         }
 
-        $output->writeln(sprintf('<info>Generated %d files in %s</info>', $count, $outputDir));
+        foreach ($files as $path => $contents) {
+            if (file_put_contents($outputDir.$path, $contents) === false) {
+                $output->writeln(sprintf('<error>Could not write %s</error>', $outputDir.$path));
+
+                return Command::FAILURE;
+            }
+        }
+
+        $output->writeln(sprintf('<info>Generated %d files in %s</info>', count($files), $outputDir));
 
         return Command::SUCCESS;
     }
